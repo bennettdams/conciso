@@ -37,8 +37,8 @@ const App: React.FC = () => {
           </div>
 
           <div className="buttons">
-            <a className="button is-primary">Primary</a>
-            <a className="button is-link">Link</a>
+            <button className="button is-primary">Primary</button>
+            <button className="button is-link">Link</button>
           </div>
         </div>
       </section>

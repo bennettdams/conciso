@@ -12,8 +12,7 @@ const Navbar: React.FC = () => {
           /> */}
         </a>
 
-        <a
-          role="button"
+        <button
           className="navbar-burger burger"
           aria-label="menu"
           aria-expanded="false"
@@ -22,24 +21,24 @@ const Navbar: React.FC = () => {
           <span aria-hidden="true" />
           <span aria-hidden="true" />
           <span aria-hidden="true" />
-        </a>
+        </button>
       </div>
 
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
-          <a className="navbar-item">Home</a>
+          <div className="navbar-item">Home</div>
 
-          <a className="navbar-item">Documentation</a>
+          <div className="navbar-item">Documentation</div>
 
           <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">More</a>
+            <div className="navbar-link">More</div>
 
             <div className="navbar-dropdown">
-              <a className="navbar-item">About</a>
-              <a className="navbar-item">Jobs</a>
-              <a className="navbar-item">Contact</a>
+              <div className="navbar-item">About</div>
+              <div className="navbar-item">Jobs</div>
+              <div className="navbar-item">Contact</div>
               <hr className="navbar-divider" />
-              <a className="navbar-item">Report an issue</a>
+              <div className="navbar-item">Report an issue</div>
             </div>
           </div>
         </div>
@@ -47,10 +46,10 @@ const Navbar: React.FC = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <a className="button is-primary">
+              <button className="button is-primary">
                 <strong>Sign up</strong>
-              </a>
-              <a className="button is-light">Log in</a>
+              </button>
+              <button className="button is-light">Log in</button>
             </div>
           </div>
         </div>
