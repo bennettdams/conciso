@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ROUTES from "../../../constants/routes";
 
 const Navbar: React.FC = () => {
   return (
@@ -27,16 +28,20 @@ const Navbar: React.FC = () => {
 
       <div id="navbarConciso" className="navbar-menu">
         <div className="navbar-start">
-          <Link className="navbar-item" to="/">
+          <Link className="navbar-item" to={ROUTES.HOME}>
             Home
           </Link>
 
-          <Link className="navbar-item" to="/contact">
+          <Link className="navbar-item" to={ROUTES.CONTACT}>
             Contact
           </Link>
 
-          <Link className="navbar-item" to="/about">
+          <Link className="navbar-item" to={ROUTES.ABOUT}>
             About
+          </Link>
+
+          <Link className="navbar-item" to={ROUTES.POST}>
+            Post
           </Link>
 
           <div className="navbar-item has-dropdown is-hoverable">
