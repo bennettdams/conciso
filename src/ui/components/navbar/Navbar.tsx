@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   return (
@@ -16,7 +17,7 @@ const Navbar: React.FC = () => {
           className="navbar-burger burger"
           aria-label="menu"
           aria-expanded="false"
-          data-target="navbarBasicExample"
+          data-target="navbarConciso"
         >
           <span aria-hidden="true" />
           <span aria-hidden="true" />
@@ -24,21 +25,37 @@ const Navbar: React.FC = () => {
         </button>
       </div>
 
-      <div id="navbarBasicExample" className="navbar-menu">
+      <div id="navbarConciso" className="navbar-menu">
         <div className="navbar-start">
-          <div className="navbar-item">Home</div>
+          <Link className="navbar-item" to="/">
+            Home
+          </Link>
 
-          <div className="navbar-item">Documentation</div>
+          <Link className="navbar-item" to="/contact">
+            Contact
+          </Link>
+
+          <Link className="navbar-item" to="/about">
+            About
+          </Link>
 
           <div className="navbar-item has-dropdown is-hoverable">
             <div className="navbar-link">More</div>
 
             <div className="navbar-dropdown">
-              <div className="navbar-item">About</div>
-              <div className="navbar-item">Jobs</div>
-              <div className="navbar-item">Contact</div>
+              <a className="navbar-item" href="/about">
+                About
+              </a>
+              <a className="navbar-item" href="/legal">
+                Legal
+              </a>
+              <a className="navbar-item" href="/github">
+                GitHub
+              </a>
               <hr className="navbar-divider" />
-              <div className="navbar-item">Report an issue</div>
+              <a className="navbar-item" href="/issue">
+                Bennett
+              </a>
             </div>
           </div>
         </div>
