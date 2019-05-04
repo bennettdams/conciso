@@ -21,7 +21,7 @@ const Home: React.FC = () => {
   }, [firestore]);
 
   return (
-    <div className="home">
+    <div className="home container">
       <section className="section">
         <div className="hero-body">
           <div className="container">
@@ -43,7 +43,7 @@ const Home: React.FC = () => {
                     <button className="delete" />
                   </div>
                   <div className="message-body">
-                    <strong>{post.id}</strong>
+                    <strong>ID: {post.id}</strong>
                     <br />
                     {post.content}
                   </div>

@@ -1,31 +1,23 @@
 import React from "react";
 
+// COMPONENTS
+import Count from "../components/Count";
+
 const Contact: React.FC = () => {
   return (
-    <section className="section">
-      <div className="container">
-        <div className="field">
-          <div className="control">
-            <input className="input" type="text" placeholder="Input" />
+    <div className="contact container">
+      <section className="section">
+        <div className="hero-body">
+          <div className="container">
+            <h1 className="title is-size-1 is-family-secondary">CONTACT</h1>
           </div>
         </div>
+      </section>
 
-        <div className="field">
-          <p className="control">
-            <span className="select">
-              <select>
-                <option>Select dropdown</option>
-              </select>
-            </span>
-          </p>
-        </div>
-
-        <div className="buttons">
-          <button className="button is-primary">Primary</button>
-          <button className="button is-link">Link</button>
-        </div>
-      </div>
-    </section>
+      <section className="section">
+        <Count />
+      </section>
+    </div>
   );
 };
 
