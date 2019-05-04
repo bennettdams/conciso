@@ -33,13 +33,21 @@ $input-shadow: none;
 @import "node_modules/bulma/sass/utilities/_all.sass";
 @import "node_modules/bulma/sass/base/_all.sass";
 
+// GRID
+// @import "node_modules/bulma/sass/grid/columns";
+// @import "node_modules/bulma/sass/grid/_all.sass";
+
 // ELEMENTS
 @import "node_modules/bulma/sass/elements/button.sass";
 @import "node_modules/bulma/sass/elements/container.sass";
 @import "node_modules/bulma/sass/elements/content.sass";
 @import "node_modules/bulma/sass/elements/form.sass";
 @import "node_modules/bulma/sass/elements/title.sass";
+
+// COMPONENTS
 @import "node_modules/bulma/sass/components/navbar.sass";
+@import "node_modules/bulma/sass/components/message.sass";
+// @import "node_modules/bulma/sass/components/list.sass";
 
 // LAYOUT
 @import "node_modules/bulma/sass/layout/footer.sass";

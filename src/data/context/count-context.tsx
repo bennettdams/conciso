@@ -1,13 +1,12 @@
 import * as React from "react";
+import { createContext, useState, useMemo, useContext } from "react";
 
 type CountContextValue = {
   count: number;
   setCount: (updater: (count: number) => number) => void;
 };
 
-const CountContext = React.createContext<CountContextValue | undefined>(
-  undefined
-);
+const CountContext = createContext<CountContextValue | undefined>(undefined);
 
 type CountProviderProps = {
   value?: CountContextValue;
@@ -15,8 +14,8 @@ type CountProviderProps = {
 };
 
 function CountProvider(props: CountProviderProps) {
-  const [count, setCount] = React.useState(0);
-  const value = React.useMemo(() => {
+  const [count, setCount] = useState(0);
+  const value = useMemo(() => {
     return {
       count,
       setCount
@@ -26,7 +25,7 @@ function CountProvider(props: CountProviderProps) {
 }
 
 function useCount() {
-  const context = React.useContext(CountContext);
+  const context = useContext(CountContext);
   if (!context) {
     throw new Error("useCount must be used within a CountProvider");
   }

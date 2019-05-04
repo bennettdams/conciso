@@ -6,6 +6,10 @@ import "./App.scss";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ROUTES from "./constants/routes";
 
+// DATA
+import { CountProvider } from "./data/context/count-context";
+import { FirebaseProvider } from "./data/context/firebase-context";
+
 // COMPONENTS
 import "./ui/styles/global.scss";
 import Home from "./ui/pages/Home";
@@ -14,20 +18,21 @@ import Post from "./ui/pages/Post";
 import About from "./ui/pages/About";
 import Navbar from "./ui/components/navbar/Navbar";
 import Footer from "./ui/components/footer/Footer";
-import { CountProvider } from "./data/context/count-context";
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <Router>
-        <CountProvider>
-          <Navbar />
-          <Route exact path={ROUTES.HOME} component={Home} />
-          <Route path={ROUTES.ABOUT} component={About} />
-          <Route path={ROUTES.POST} component={Post} />
-          <Route path={ROUTES.CONTACT} component={Contact} />
-          <Footer />
-        </CountProvider>
+        <FirebaseProvider>
+          <CountProvider>
+            <Navbar />
+            <Route exact path={ROUTES.HOME} component={Home} />
+            <Route path={ROUTES.POST} component={Post} />
+            <Route path={ROUTES.ABOUT} component={About} />
+            <Route path={ROUTES.CONTACT} component={Contact} />
+            <Footer />
+          </CountProvider>
+        </FirebaseProvider>
       </Router>
     </div>
   );

@@ -11,6 +11,7 @@ const Post: React.FC = () => {
           </div>
         </div>
       </section>
+
       <section className="section">
         <Count />
       </section>

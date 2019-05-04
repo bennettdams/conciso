@@ -1,59 +1,70 @@
 import * as React from "react";
+import { createContext, useState, useMemo, useContext } from "react";
 
-//
-// import app from "firebase/app";
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
 
-// const config = {
-//   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-//   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-//   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-//   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-//   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-//   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID
-// };
+const config = {
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID
+};
 
-// class Firebase {
-//   constructor() {
-//     app.initializeApp(config);
-//   }
-// }
+type FirebaseContextValue = {
+  firestore: firebase.firestore.Firestore;
+};
 
-// export default Firebase;
-//
+const FirebaseContext = createContext<FirebaseContextValue | undefined>(
+  undefined
+);
 
-// type FirebaseContextValue = {
-//   firebase: any;
-// };
+type FirebaseProviderProps = {
+  value?: FirebaseContextValue;
+  children: React.ReactNode;
+};
 
-// const FirebaseContext = React.createContext<FirebaseContextValue | undefined>(
-//   undefined
-// );
+function FirebaseProvider(props: FirebaseProviderProps) {
+  // create firebase app
+  const [firebaseImpl] = useState(firebase.initializeApp(config));
 
-// type FirebaseProviderProps = {
-//   firebase?: FirebaseContextValue;
-// };
+  // firestore
+  const [firestore] = useState(firebaseImpl.firestore());
 
-// function FirebaseProvider(props: FirebaseProviderProps) {
-//   const [firebase] = React.useState(null);
-//   const value = React.useMemo(() => {
-//     return {
-//       firebase,
-//     };
-//   }, [firebase]);
-//   return <FirebaseContext.Provider firebase={value} />;
-// }
+  // auth
+  const [auth] = useState(firebaseImpl.auth());
+  auth.setPersistence(firebase.auth.Auth.Persistence.NONE);
 
-// function useFirebase() {
-//   const context = React.useContext(FirebaseContext);
-//   if (!context) {
-//     throw new Error("useCount must be used within a CountProvider");
-//   }
-//   const { count, setCount } = context;
-//   const increment = () => setCount(c => c + 1);
-//   return {
-//     count,
-//     increment
-//   };
-// }
+  const email = process.env.REACT_APP_FIREBASE_USER as string;
+  const password: string = process.env.REACT_APP_FIREBASE_PASSWORD as string;
 
-// export { FirebaseProvider, useFirebase };
+  auth
+    .signInWithEmailAndPassword(email, password)
+    .then(signin => {
+      console.log("Signed in with ", email);
+      console.log("Sign in object: ", signin);
+    })
+    .catch(error => {
+      console.log("Error when signing in: ", error);
+    });
+
+  const value = useMemo(() => {
+    return {
+      firestore
+    };
+  }, [firestore]);
+  return <FirebaseContext.Provider value={value} {...props} />;
+}
+
+function useFirestore() {
+  const context = useContext(FirebaseContext);
+  if (!context) {
+    throw new Error("useFirestore must be used within a FirebaseProvider");
+  }
+  return context.firestore;
+}
+
+export { FirebaseProvider, useFirestore };
