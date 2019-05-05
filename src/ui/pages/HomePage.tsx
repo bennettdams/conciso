@@ -3,7 +3,7 @@ import Count from "../components/Count";
 import { useFirestore } from "../../data/context/firebase-context";
 import PostType from "../../types/PostType";
 
-const Home: React.FC = () => {
+const HomePage: React.FC = () => {
   const firestore = useFirestore();
   const [posts, setPosts] = useState<PostType[]>([]);
 
@@ -60,4 +60,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default HomePage;

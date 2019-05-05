@@ -2,7 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ROUTES from "../../../constants/routes";
 
+// COMPONENTS
+import Modal from "../modal/Modal";
+import useModal from "../../hooks/useModal";
+
 const Navbar: React.FC = () => {
+  const { isShowing: isShowingLogin, toggle: toggleLogin } = useModal();
+
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
@@ -71,10 +77,13 @@ const Navbar: React.FC = () => {
               <button className="button is-primary">
                 <strong>Sign up</strong>
               </button>
-              <button className="button is-light">Log in</button>
+              <button className="button is-light" onClick={toggleLogin}>
+                Log in
+              </button>
             </div>
           </div>
         </div>
+        <Modal isShowing={isShowingLogin} hide={toggleLogin} />
       </div>
     </nav>
   );

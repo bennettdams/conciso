@@ -12,10 +12,10 @@ import { FirebaseProvider } from "./data/context/firebase-context";
 
 // COMPONENTS
 import "./ui/styles/global.scss";
-import Home from "./ui/pages/Home";
-import Contact from "./ui/pages/Contact";
-import Post from "./ui/pages/Post";
-import About from "./ui/pages/About";
+import HomePage from "./ui/pages/HomePage";
+import ContactPage from "./ui/pages/ContactPage";
+import PostPage from "./ui/pages/PostPage";
+import AboutPage from "./ui/pages/AboutPage";
 import Navbar from "./ui/components/navbar/Navbar";
 import Footer from "./ui/components/footer/Footer";
 
@@ -26,10 +26,10 @@ const App: React.FC = () => {
         <FirebaseProvider>
           <CountProvider>
             <Navbar />
-            <Route exact path={ROUTES.HOME} component={Home} />
-            <Route path={ROUTES.POST} component={Post} />
-            <Route path={ROUTES.ABOUT} component={About} />
-            <Route path={ROUTES.CONTACT} component={Contact} />
+            <Route exact path={ROUTES.HOME} component={HomePage} />
+            <Route path={ROUTES.POST} component={PostPage} />
+            <Route path={ROUTES.ABOUT} component={AboutPage} />
+            <Route path={ROUTES.CONTACT} component={ContactPage} />
             <Footer />
           </CountProvider>
         </FirebaseProvider>

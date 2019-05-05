@@ -3,7 +3,7 @@ import React from "react";
 // COMPONENTS
 import Count from "../components/Count";
 
-const Contact: React.FC = () => {
+const ContactPage: React.FC = () => {
   return (
     <div className="contact container">
       <section className="section">
@@ -21,4 +21,4 @@ const Contact: React.FC = () => {
   );
 };
 
-export default Contact;
+export default ContactPage;

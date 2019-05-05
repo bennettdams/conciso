@@ -1,6 +1,6 @@
 import React from "react";
 
-const About: React.FC = () => {
+const AboutPage: React.FC = () => {
   return (
     <div className="about container">
       <section className="section">
@@ -14,4 +14,4 @@ const About: React.FC = () => {
   );
 };
 
-export default About;
+export default AboutPage;

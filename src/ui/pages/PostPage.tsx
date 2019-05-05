@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFirestore } from "../../data/context/firebase-context";
 
-const Post: React.FC = () => {
+const PostPage: React.FC = () => {
   const [id, setId] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
@@ -121,4 +121,4 @@ const Post: React.FC = () => {
   );
 };
 
-export default Post;
+export default PostPage;
