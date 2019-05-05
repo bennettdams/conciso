@@ -14,7 +14,8 @@ import { FirebaseProvider } from "./data/context/firebase-context";
 import "./ui/styles/global.scss";
 import HomePage from "./ui/pages/HomePage";
 import ContactPage from "./ui/pages/ContactPage";
-import PostPage from "./ui/pages/PostPage";
+import PostsPage from "./ui/pages/PostsPage";
+import PostCreatePage from "./ui/pages/post/PostCreatePage";
 import AboutPage from "./ui/pages/AboutPage";
 import Navbar from "./ui/components/navbar/Navbar";
 import Footer from "./ui/components/footer/Footer";
@@ -27,7 +28,8 @@ const App: React.FC = () => {
           <CountProvider>
             <Navbar />
             <Route exact path={ROUTES.HOME} component={HomePage} />
-            <Route path={ROUTES.POST} component={PostPage} />
+            <Route path={ROUTES.POSTS} component={PostsPage} />
+            <Route path={ROUTES.POST_CREATE} component={PostCreatePage} />
             <Route path={ROUTES.ABOUT} component={AboutPage} />
             <Route path={ROUTES.CONTACT} component={ContactPage} />
             <Footer />

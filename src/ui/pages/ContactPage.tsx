@@ -2,17 +2,12 @@ import React from "react";
 
 // COMPONENTS
 import Count from "../components/Count";
+import PageHeader from "../components/page-header/PageHeader";
 
 const ContactPage: React.FC = () => {
   return (
-    <div className="contact container">
-      <section className="section">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title is-size-1 is-family-secondary">CONTACT</h1>
-          </div>
-        </div>
-      </section>
+    <div className="contact-page container fade-in">
+      <PageHeader title="CONTACT" />
 
       <section className="section">
         <Count />

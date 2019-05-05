@@ -27,12 +27,14 @@ type FirebaseProviderProps = {
   children: React.ReactNode;
 };
 
-function FirebaseProvider(props: FirebaseProviderProps) {
+const FirebaseProvider = (props: FirebaseProviderProps) => {
   // create firebase app
   const [firebaseImpl] = useState(firebase.initializeApp(config));
 
   // firestore
-  const [firestore] = useState(firebaseImpl.firestore());
+  const [firestore] = useState<firebase.firestore.Firestore>(
+    firebaseImpl.firestore()
+  );
 
   // auth
   const [auth] = useState(firebaseImpl.auth());
@@ -57,14 +59,18 @@ function FirebaseProvider(props: FirebaseProviderProps) {
     };
   }, [firestore]);
   return <FirebaseContext.Provider value={value} {...props} />;
-}
+};
 
-function useFirestore() {
+const getServerTimestamp = (): firebase.firestore.FieldValue => {
+  return firebase.firestore.FieldValue.serverTimestamp();
+};
+
+const useFirestore = (): firebase.firestore.Firestore => {
   const context = useContext(FirebaseContext);
   if (!context) {
     throw new Error("useFirestore must be used within a FirebaseProvider");
   }
   return context.firestore;
-}
+};
 
-export { FirebaseProvider, useFirestore };
+export { FirebaseProvider, useFirestore, getServerTimestamp };

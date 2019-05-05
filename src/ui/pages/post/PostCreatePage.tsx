@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { useFirestore } from "../../data/context/firebase-context";
+import {
+  useFirestore,
+  getServerTimestamp
+} from "../../../data/context/firebase-context";
+import PageHeader from "../../components/page-header/PageHeader";
 
-const PostPage: React.FC = () => {
+const PostCreatePage: React.FC = () => {
   const [id, setId] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
@@ -9,53 +13,47 @@ const PostPage: React.FC = () => {
   const firestore = useFirestore();
 
   const handleChangeId = (event: React.FormEvent<HTMLInputElement>): void => {
-    const target = event.target as HTMLInputElement;
-    console.log("ID state change: " + target.value);
-    setId(target.value);
     event.preventDefault();
+    const target = event.target as HTMLInputElement;
+    setId(target.value);
   };
 
   const handleChangeTitle = (
     event: React.FormEvent<HTMLInputElement>
   ): void => {
-    const target = event.target as HTMLInputElement;
-    console.log("Title state change: " + target.value);
-    setTitle(target.value);
     event.preventDefault();
+    const target = event.target as HTMLInputElement;
+    setTitle(target.value);
   };
 
   const handleChangeContent = (
     event: React.FormEvent<HTMLInputElement>
   ): void => {
-    const target = event.target as HTMLInputElement;
-    console.log("Content state change: " + target.value);
-    setContent(target.value);
     event.preventDefault();
+    const target = event.target as HTMLInputElement;
+    setContent(target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    setSubmitted(true);
-    console.log({ id, title, content });
     event.preventDefault();
+    setSubmitted(true);
+    console.log("Submitted!");
     createDocument();
   };
 
   const createDocument = (): void => {
     firestore
       .collection("posts")
-      .doc("test123")
-      .set({ id, title, content });
+      .add({ id, title, content, timestamp: getServerTimestamp() })
+      .then(ref => {
+        console.log("Added document with ID: ", ref.id);
+      });
   };
 
   return (
-    <div className="post container">
-      <section className="section">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title is-size-1 is-family-secondary">POST</h1>
-          </div>
-        </div>
-      </section>
+    <div className="post-create-page container fade-in">
+      <PageHeader title="CREATE POST" />
+
       <section className="section">
         <div className="container">
           <form onSubmit={handleSubmit}>
@@ -121,4 +119,4 @@ const PostPage: React.FC = () => {
   );
 };
 
-export default PostPage;
+export default PostCreatePage;

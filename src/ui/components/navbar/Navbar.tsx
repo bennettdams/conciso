@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import ROUTES from "../../../constants/routes";
 
 // COMPONENTS
-import Modal from "../modal/Modal";
 import useModal from "../../hooks/useModal";
+import LoginModal from "../modal/LoginModal";
+import SignupModal from "../modal/SignupModal";
 
 const Navbar: React.FC = () => {
   const { isShowing: isShowingLogin, toggle: toggleLogin } = useModal();
+  const { isShowing: isShowingSignup, toggle: toggleSignup } = useModal();
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -38,6 +40,18 @@ const Navbar: React.FC = () => {
             Home
           </Link>
 
+          <Link className="navbar-item" to={ROUTES.POSTS}>
+            Posts
+          </Link>
+
+          <Link className="navbar-item" to={ROUTES.POST_CREATE}>
+            <button className="button is-primary">
+              <strong>Create Post</strong>
+            </button>
+          </Link>
+        </div>
+
+        <div className="navbar-end">
           <Link className="navbar-item" to={ROUTES.CONTACT}>
             Contact
           </Link>
@@ -46,44 +60,51 @@ const Navbar: React.FC = () => {
             About
           </Link>
 
-          <Link className="navbar-item" to={ROUTES.POST}>
-            Post
-          </Link>
-
           <div className="navbar-item has-dropdown is-hoverable">
             <div className="navbar-link">More</div>
 
             <div className="navbar-dropdown">
-              <a className="navbar-item" href="/about">
-                About
-              </a>
               <a className="navbar-item" href="/legal">
                 Legal
               </a>
-              <a className="navbar-item" href="/github">
+              <a
+                className="navbar-item"
+                href="https://github.com/bennettdams"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
                 GitHub
               </a>
               <hr className="navbar-divider" />
-              <a className="navbar-item" href="/issue">
-                Bennett
+              <a
+                className="navbar-item"
+                href="https:twitter.com/BennettDams"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                Twitter
               </a>
             </div>
           </div>
-        </div>
 
-        <div className="navbar-end">
+          {/* SIGNUP AND LOGIN */}
           <div className="navbar-item">
             <div className="buttons">
-              <button className="button is-primary">
+              <button onClick={toggleSignup} className="button is-primary">
                 <strong>Sign up</strong>
               </button>
-              <button className="button is-light" onClick={toggleLogin}>
+              <button onClick={toggleLogin} className="button is-light">
                 Log in
               </button>
             </div>
           </div>
+          <LoginModal isShowing={isShowingLogin} hide={toggleLogin}>
+            Content of Login Modal
+          </LoginModal>
+          <SignupModal isShowing={isShowingSignup} hide={toggleSignup}>
+            Content of Signup Modal
+          </SignupModal>
         </div>
-        <Modal isShowing={isShowingLogin} hide={toggleLogin} />
       </div>
     </nav>
   );

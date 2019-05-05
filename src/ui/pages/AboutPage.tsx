@@ -1,15 +1,10 @@
 import React from "react";
+import PageHeader from "../components/page-header/PageHeader";
 
 const AboutPage: React.FC = () => {
   return (
-    <div className="about container">
-      <section className="section">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title is-size-1 is-family-secondary">ABOUT</h1>
-          </div>
-        </div>
-      </section>
+    <div className="about container fade-in">
+      <PageHeader title="ABOUT" />
     </div>
   );
 };
