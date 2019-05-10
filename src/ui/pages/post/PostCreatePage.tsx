@@ -4,6 +4,7 @@ import {
   getServerTimestamp
 } from "../../../data/context/firebase-context";
 import PageHeader from "../../components/page-header/PageHeader";
+import PostType from "../../../types/PostType";
 
 const PostCreatePage: React.FC = () => {
   const [id, setId] = useState<string>("");
@@ -12,39 +13,37 @@ const PostCreatePage: React.FC = () => {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const firestore = useFirestore();
 
-  const handleChangeId = (event: React.FormEvent<HTMLInputElement>): void => {
-    event.preventDefault();
-    const target = event.target as HTMLInputElement;
-    setId(target.value);
-  };
-
-  const handleChangeTitle = (
+  const handleChangeInput = (
     event: React.FormEvent<HTMLInputElement>
   ): void => {
     event.preventDefault();
     const target = event.target as HTMLInputElement;
-    setTitle(target.value);
-  };
-
-  const handleChangeContent = (
-    event: React.FormEvent<HTMLInputElement>
-  ): void => {
-    event.preventDefault();
-    const target = event.target as HTMLInputElement;
-    setContent(target.value);
+    switch (target.name) {
+      case "inputId":
+        setId(target.value);
+        break;
+      case "inputTitle":
+        setTitle(target.value);
+        break;
+      case "inputContent":
+        setContent(target.value);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     setSubmitted(true);
     console.log("Submitted!");
-    createDocument();
+    createPost();
   };
 
-  const createDocument = (): void => {
+  const createPost = (): void => {
     firestore
       .collection("posts")
-      .add({ id, title, content, timestamp: getServerTimestamp() })
+      .add({ id, title, content, timestamp: getServerTimestamp() } as PostType)
       .then(ref => {
         console.log("Added document with ID: ", ref.id);
       });
@@ -54,57 +53,72 @@ const PostCreatePage: React.FC = () => {
     <div className="post-create-page container fade-in">
       <PageHeader title="CREATE POST" />
 
-      <section className="section">
+      <section className="section is-fullheight">
         <div className="container">
-          <form onSubmit={handleSubmit}>
-            <div className="field">
-              <div className="control">
-                <h2>ID: </h2>
-                <input
-                  className="input"
-                  type="text"
-                  placeholder="ID.."
-                  value={id}
-                  onChange={handleChangeId}
-                />
-                <h2>Title: </h2>
-                <input
-                  className="input"
-                  type="text"
-                  placeholder="Title.."
-                  value={title}
-                  onChange={handleChangeTitle}
-                />
-                <h2>Content: </h2>
-                <input
-                  className="input"
-                  type="text"
-                  placeholder="Content.."
-                  value={content}
-                  onChange={handleChangeContent}
-                />
-              </div>
-            </div>
+          <div className="columns is-centered">
+            <div className="column is-half box">
+              <form onSubmit={handleSubmit}>
+                <div className="field">
+                  <label className="label">ID</label>
+                  <div className="control">
+                    <input
+                      name="inputId"
+                      className="input"
+                      type="text"
+                      placeholder="ID.."
+                      value={id}
+                      onChange={handleChangeInput}
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Title</label>
+                  <div className="control">
+                    <input
+                      name="inputTitle"
+                      className="input"
+                      type="text"
+                      placeholder="Title.."
+                      value={title}
+                      onChange={handleChangeInput}
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Content</label>
+                  <div className="control">
+                    <input
+                      name="inputContent"
+                      className="input"
+                      type="text"
+                      placeholder="Content.."
+                      value={content}
+                      onChange={handleChangeInput}
+                    />
+                  </div>
+                </div>
 
-            <div className="field">
-              <p className="control">
-                Category:
-                <span className="select">
-                  <select>
-                    <option>Life</option>
-                    <option>Tutorial</option>
-                  </select>
-                </span>
-              </p>
-            </div>
+                <div className="field">
+                  <label className="label">Category</label>
+                  <div className="control">
+                    <span className="select">
+                      <select>
+                        <option>Life</option>
+                        <option>Tutorial</option>
+                      </select>
+                    </span>
+                  </div>
+                </div>
 
-            <div className="buttons">
-              <button className="button is-primary" type="submit">
-                Create Post
-              </button>
-              <button className="button is-link">Save for later</button>
+                <div className="buttons">
+                  <button className="button is-primary" type="submit">
+                    Create Post
+                  </button>
+                  <button className="button is-link">Save for later</button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
           <br />
           <br />
           <br />

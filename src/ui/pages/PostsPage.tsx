@@ -24,17 +24,20 @@ const PostsPage: React.FC = () => {
     <div className="posts-page container fade-in">
       <PageHeader title="POSTS" />
       <section className="posts">
-        <div className="columns is-8 is-hoverable">
+        <div className="columns is-multiline">
           {posts.map((post: PostType) => {
             return (
-              <div key={post.id} className="column is-full">
+              <div
+                key={post.id}
+                className="column is-half is-offset-one-quarter"
+              >
                 <article className="message is-primary">
                   <div className="message-header">
-                    <p>Post: {post.title}</p>
+                    <p>{post.title}</p>
                     <button className="delete" />
                   </div>
                   <div className="message-body">
-                    <strong>ID: {post.id}</strong>
+                    <strong>{post.id}</strong>
                     <br />
                     {post.content}
                     <br />

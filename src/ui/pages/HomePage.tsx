@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Count from "../components/Count";
+import { useFirestore } from "../../data/context/firebase-context";
+import PostType from "../../types/PostType";
 
 const HomePage: React.FC = () => {
+  const firestore = useFirestore();
+  const [amountPosts, setAmountPosts] = useState<PostType[]>([]);
+
+  useEffect(() => {
+    firestore
+      .collection("posts")
+      .get()
+      .then(snapshot => {
+        // @ts-ignore
+        setAmountPosts(snapshot.docs.length);
+      })
+      .catch(err => {
+        console.log("Error getting documents", err);
+      });
+  }, [firestore]);
   return (
     <div className="home-page container fade-in">
       <section className="section">
@@ -16,7 +33,32 @@ const HomePage: React.FC = () => {
       </section>
 
       <section className="section">
-        <Count />
+        <nav className="level">
+          <div className="level-item has-text-centered">
+            <div>
+              <p className="heading">Posts</p>
+              <p className="title">{amountPosts}</p>
+            </div>
+          </div>
+          <div className="level-item has-text-centered">
+            <div>
+              <p className="heading">Posts</p>
+              <p className="title">123</p>
+            </div>
+          </div>
+          <div className="level-item has-text-centered">
+            <div>
+              <p className="heading">Posts</p>
+              <p className="title">456K</p>
+            </div>
+          </div>
+          <div className="level-item has-text-centered">
+            <div>
+              <p className="heading">Posts</p>
+              <p className="title">789</p>
+            </div>
+          </div>
+        </nav>
       </section>
     </div>
   );

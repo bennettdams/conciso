@@ -16,7 +16,7 @@ const Modal: React.FC<ModalProps> = props =>
           <div
             className={[
               "modal",
-              "fade-in",
+              "fade-in-fast",
               props.isShowing ? "is-active" : ""
             ].join(" ")}
           >
