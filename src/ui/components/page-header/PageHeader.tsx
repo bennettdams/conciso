@@ -10,9 +10,7 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
       <section className="section">
         <div className="hero-body">
           <div className="container">
-            <h1 className="title is-size-1 is-family-secondary">
-              {props.title}
-            </h1>
+            <h1 className="title is-size-1 has-text-primary">{props.title}</h1>
           </div>
         </div>
       </section>
