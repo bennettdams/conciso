@@ -9,7 +9,7 @@ import PostType from "../../../types/PostType";
 const PostCreatePage: React.FC = () => {
   const [id, setId] = useState<string>("");
   const [title, setTitle] = useState<string>("");
-  const [content, setContent] = useState<string>("");
+  const [descriptionShort, setDescriptionShort] = useState<string>("");
   const [submitted, setSubmitted] = useState<boolean>(false);
   const firestore = useFirestore();
 
@@ -25,8 +25,8 @@ const PostCreatePage: React.FC = () => {
       case "inputTitle":
         setTitle(target.value);
         break;
-      case "inputContent":
-        setContent(target.value);
+      case "inputDescriptionShort":
+        setDescriptionShort(target.value);
         break;
       default:
         break;
@@ -38,12 +38,20 @@ const PostCreatePage: React.FC = () => {
     setSubmitted(true);
     console.log("Submitted!");
     createPost();
+    setId("");
+    setTitle("");
+    setDescriptionShort("");
   };
 
   const createPost = (): void => {
     firestore
       .collection("posts")
-      .add({ id, title, content, timestamp: getServerTimestamp() } as PostType)
+      .add({
+        id,
+        title,
+        descriptionShort,
+        timestamp: getServerTimestamp()
+      } as PostType)
       .then(ref => {
         console.log("Added document with ID: ", ref.id);
       });
@@ -85,14 +93,14 @@ const PostCreatePage: React.FC = () => {
                   </div>
                 </div>
                 <div className="field">
-                  <label className="label">Content</label>
+                  <label className="label">Short description</label>
                   <div className="control">
                     <input
-                      name="inputContent"
+                      name="inputDescriptionShort"
                       className="input"
                       type="text"
-                      placeholder="Content.."
-                      value={content}
+                      placeholder="Short description.."
+                      value={descriptionShort}
                       onChange={handleChangeInput}
                     />
                   </div>

@@ -19,6 +19,7 @@ import AboutPage from "./ui/pages/AboutPage";
 import Navbar from "./ui/components/navbar/Navbar";
 import Footer from "./ui/components/footer/Footer";
 import ProfilePage from "./ui/pages/ProfilePage";
+import PostViewPage from "./ui/pages/post/PostViewPage";
 
 const App: React.FC = () => {
   return (
@@ -32,6 +33,7 @@ const App: React.FC = () => {
           <Route path={ROUTES.ABOUT} component={AboutPage} />
           <Route path={ROUTES.CONTACT} component={ContactPage} />
           <Route path={ROUTES.PROFILE} component={ProfilePage} />
+          <Route path={ROUTES.POST_VIEW} component={PostViewPage} />
           <Footer />
         </FirebaseProvider>
       </Router>

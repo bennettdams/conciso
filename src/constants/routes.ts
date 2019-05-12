@@ -4,7 +4,8 @@ const ROUTES = {
   ABOUT: "/about",
   POST_CREATE: "/create-post",
   POSTS: "/posts",
-  PROFILE: "/profile"
+  PROFILE: "/profile",
+  POST_VIEW: "/post/:id"
 };
 
 export default ROUTES;

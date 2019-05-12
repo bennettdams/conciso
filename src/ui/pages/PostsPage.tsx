@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useFirestore } from "../../data/context/firebase-context";
 import PostType from "../../types/PostType";
 import PageHeader from "../components/page-header/PageHeader";
+import { timestampToDateString } from "../../util/timestampToDateString";
+import { Link } from "react-router-dom";
 
 const PostsPage: React.FC = () => {
   const firestore = useFirestore();
@@ -31,19 +33,21 @@ const PostsPage: React.FC = () => {
                 key={post.id}
                 className="column is-half is-offset-one-quarter"
               >
-                <article className="message is-primary fade-in-slow">
-                  <div className="message-header">
-                    <p>{post.title}</p>
-                    <button className="delete" />
-                  </div>
-                  <div className="message-body">
-                    <strong>{post.id}</strong>
-                    <br />
-                    {post.content}
-                    <br />
-                    {post.timestamp.toDate().toLocaleString()}
-                  </div>
-                </article>
+                <Link className="navbar-ite" to={"post/" + post.id}>
+                  <article className="message is-primary fade-in-slow">
+                    <div className="message-header">
+                      <p>{post.title}</p>
+                      <button className="delete" />
+                    </div>
+                    <div className="message-body">
+                      <strong>{post.id}</strong>
+                      <br />
+                      {post.descriptionShort}
+                      <br />
+                      {timestampToDateString(post.timestamp)}
+                    </div>
+                  </article>
+                </Link>
               </div>
             );
           })}

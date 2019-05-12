@@ -34,7 +34,7 @@ const HomePage: React.FC = () => {
       </section>
 
       <section className="section">
-        <nav className="level">
+        <div className="level">
           <div className="level-item has-text-centered">
             <div>
               <p className="heading">Posts</p>
@@ -59,7 +59,7 @@ const HomePage: React.FC = () => {
               <p className="title is-size-1 has-text-primary">789</p>
             </div>
           </div>
-        </nav>
+        </div>
       </section>
     </div>
   );
