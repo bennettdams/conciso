@@ -18,6 +18,7 @@ $family-secondary: "Playfair Display", serif;
 $grey-dark: $brown;
 $grey-light: $beige-light;
 $primary: $purple;
+$secondary: $orange;
 // $link: $pink;
 $link: $orange;
 $widescreen-enabled: false;
@@ -29,30 +30,32 @@ $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
-// BASE
-@import "node_modules/bulma/sass/utilities/_all.sass";
-@import "node_modules/bulma/sass/base/_all.sass";
+@import "node_modules/bulma/bulma.sass";
 
-// GRID
-@import "node_modules/bulma/sass/grid/columns";
-@import "node_modules/bulma/sass/grid/_all.sass";
+// // BASE
+// @import "node_modules/bulma/sass/utilities/_all.sass";
+// @import "node_modules/bulma/sass/base/_all.sass";
 
-// ELEMENTS
-@import "node_modules/bulma/sass/elements/button.sass";
-@import "node_modules/bulma/sass/elements/container.sass";
-@import "node_modules/bulma/sass/elements/content.sass";
-@import "node_modules/bulma/sass/elements/form.sass";
-@import "node_modules/bulma/sass/elements/title.sass";
-@import "node_modules/bulma/sass/elements/box.sass";
+// // GRID
+// @import "node_modules/bulma/sass/grid/columns";
+// @import "node_modules/bulma/sass/grid/_all.sass";
 
-// COMPONENTS
-@import "node_modules/bulma/sass/components/navbar.sass";
-@import "node_modules/bulma/sass/components/message.sass";
-@import "node_modules/bulma/sass/components/modal.sass";
-@import "node_modules/bulma/sass/components/level.sass";
-// @import "node_modules/bulma/sass/components/list.sass";
+// // ELEMENTS
+// @import "node_modules/bulma/sass/elements/button.sass";
+// @import "node_modules/bulma/sass/elements/container.sass";
+// @import "node_modules/bulma/sass/elements/content.sass";
+// @import "node_modules/bulma/sass/elements/form.sass";
+// @import "node_modules/bulma/sass/elements/title.sass";
+// @import "node_modules/bulma/sass/elements/box.sass";
 
-// LAYOUT
-@import "node_modules/bulma/sass/layout/footer.sass";
-@import "node_modules/bulma/sass/layout/hero.sass";
-@import "node_modules/bulma/sass/layout/section.sass";
+// // COMPONENTS
+// @import "node_modules/bulma/sass/components/navbar.sass";
+// @import "node_modules/bulma/sass/components/message.sass";
+// @import "node_modules/bulma/sass/components/modal.sass";
+// @import "node_modules/bulma/sass/components/level.sass";
+// // @import "node_modules/bulma/sass/components/list.sass";
+
+// // LAYOUT
+// @import "node_modules/bulma/sass/layout/footer.sass";
+// @import "node_modules/bulma/sass/layout/hero.sass";
+// @import "node_modules/bulma/sass/layout/section.sass";

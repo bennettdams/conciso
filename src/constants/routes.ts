@@ -3,7 +3,8 @@ const ROUTES = {
   CONTACT: "/contact",
   ABOUT: "/about",
   POST_CREATE: "/create-post",
-  POSTS: "/posts"
+  POSTS: "/posts",
+  PROFILE: "/profile"
 };
 
 export default ROUTES;

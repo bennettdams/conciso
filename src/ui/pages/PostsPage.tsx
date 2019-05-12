@@ -31,7 +31,7 @@ const PostsPage: React.FC = () => {
                 key={post.id}
                 className="column is-half is-offset-one-quarter"
               >
-                <article className="message is-primary">
+                <article className="message is-primary fade-in-slow">
                   <div className="message-header">
                     <p>{post.title}</p>
                     <button className="delete" />

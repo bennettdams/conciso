@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Count from "../components/Count";
 import { useFirestore } from "../../data/context/firebase-context";
 import PostType from "../../types/PostType";
 
@@ -37,25 +36,25 @@ const HomePage: React.FC = () => {
           <div className="level-item has-text-centered">
             <div>
               <p className="heading">Posts</p>
-              <p className="title">{amountPosts}</p>
+              <p className="title is-size-1 has-text-primary">{amountPosts}</p>
             </div>
           </div>
           <div className="level-item has-text-centered">
             <div>
               <p className="heading">Posts</p>
-              <p className="title">123</p>
+              <p className="title is-size-1 has-text-primary">123</p>
             </div>
           </div>
           <div className="level-item has-text-centered">
             <div>
               <p className="heading">Posts</p>
-              <p className="title">456K</p>
+              <p className="title is-size-1 has-text-primary">456K</p>
             </div>
           </div>
           <div className="level-item has-text-centered">
             <div>
               <p className="heading">Posts</p>
-              <p className="title">789</p>
+              <p className="title is-size-1 has-text-primary">789</p>
             </div>
           </div>
         </nav>
