@@ -27,9 +27,15 @@ type FirebaseProviderProps = {
   children: React.ReactNode;
 };
 
+// if (!firebase.apps.length) {
+//   firebase.initializeApp({});
+// }
+
+const firebaseImpl = firebase.initializeApp(config);
+
 const FirebaseProvider = (props: FirebaseProviderProps) => {
   // create firebase app
-  const [firebaseImpl] = useState(firebase.initializeApp(config));
+  // const [firebaseImpl] = useState(firebase.initializeApp(config));
 
   // firestore
   const [firestore] = useState<firebase.firestore.Firestore>(

@@ -4,6 +4,8 @@ import { RouteComponentProps } from "react-router-dom";
 import PostType from "../../../types/PostType";
 import { useFirestore } from "../../../data/context/firebase-context";
 import { timestampToDateString } from "../../../util/timestampToDateString";
+import Chapter from "../../components/chapter/Chapter";
+import { IChapter } from "../../../types/IChapter";
 
 type TParams = { id: string };
 
@@ -11,6 +13,7 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
   const postId: string = match.params.id;
   const firestore = useFirestore();
   const [post, setPost] = useState<PostType>();
+  const [chapters, setChapters] = useState<IChapter[]>();
   const [postDoc, setPostDoc] = useState<
     firebase.firestore.QueryDocumentSnapshot
   >();
@@ -23,16 +26,25 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.id, " => ", doc.data());
           setPostDoc(doc);
           setPost(doc.data() as PostType);
         });
+      })
+      .catch(error => {
+        throw new Error(error);
       });
   }, [firestore, postId]);
 
-  //   useEffect(() => {
-  //     console.log(postDoc.)
-  //   }, [post]);
+  useEffect(() => {
+    if (postDoc) {
+      postDoc.ref
+        .collection("chapters")
+        .get()
+        .then(a => {
+          setChapters(a.docs.map(doc => doc.data() as IChapter));
+        });
+    }
+  }, [postDoc]);
 
   return (
     <div className="post-view-page fade-in">
@@ -55,6 +67,10 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
                 <div className="level-right">
                   <div className="level-item">
                     <div>
+                      <h2 className="subtitle">
+                        <small>@johnsmith</small>
+                      </h2>
+                      <br />
                       <h2 className="subtitle">
                         {timestampToDateString(post.timestamp)}
                       </h2>
@@ -89,50 +105,19 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
               </div>
             </div>
           </section>
-          <section className="section chapters columns">
-            <div className="chapter column has-background-light is-half is-offset-one-quarter">
-              <article className="media">
-                <figure className="media-left">
-                  <p className="image is-64x64">
-                    {/* <img src="https://bulma.io/images/placeholders/128x128.png" /> */}
-                  </p>
-                </figure>
-                <div className="media-content">
-                  <div className="content">
-                    <p>
-                      <strong>John Smith</strong> <small>@johnsmith</small>{" "}
-                      <small>31m</small>
-                      <br />
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Proin ornare magna eros, eu pellentesque tortor vestibulum
-                      ut. Maecenas non massa sem. Etiam finibus odio quis
-                      feugiat facilisis.
-                    </p>
-                  </div>
-                  <nav className="level is-mobile">
-                    <div className="level-left">
-                      <div className="level-item">
-                        <span className="icon is-small">
-                          <i className="fas fa-reply" />
-                        </span>
-                      </div>
-                      <div className="level-item">
-                        <span className="icon is-small">
-                          <i className="fas fa-retweet" />
-                        </span>
-                      </div>
-                      <div className="level-item">
-                        <span className="icon is-small">
-                          <i className="fas fa-heart" />
-                        </span>
-                      </div>
+          <section className="section chapters">
+            <div className="columns is-multiline">
+              {chapters &&
+                chapters.map(chapter => {
+                  return (
+                    <div
+                      key={chapter.id}
+                      className="chapter column is-half is-offset-one-quarter margin"
+                    >
+                      <Chapter chapter={chapter} />
                     </div>
-                  </nav>
-                </div>
-                <div className="media-right">
-                  <button className="delete" />
-                </div>
-              </article>
+                  );
+                })}
             </div>
           </section>
         </div>

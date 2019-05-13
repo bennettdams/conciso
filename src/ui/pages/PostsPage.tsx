@@ -31,15 +31,15 @@ const PostsPage: React.FC = () => {
             return (
               <div
                 key={post.id}
-                className="column is-half is-offset-one-quarter"
+                className="column is-three-fifths is-offset-one-fifth margin-big"
               >
-                <Link className="navbar-ite" to={"post/" + post.id}>
+                <Link to={"post/" + post.id}>
                   <article className="message is-primary fade-in-slow">
                     <div className="message-header">
-                      <p>{post.title}</p>
+                      <h1 className="is-size-2">{post.title}</h1>
                       <button className="delete" />
                     </div>
-                    <div className="message-body">
+                    <div className="message-body box">
                       <strong>{post.id}</strong>
                       <br />
                       {post.descriptionShort}
