@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "./Modal.scss";
+import { normalize } from "path";
 
 type ModalProps = {
   isShowing: boolean;
@@ -27,7 +29,7 @@ const Modal: React.FC<ModalProps> = props =>
               </header>
               <section className="modal-card-body">{props.children}</section>
               <footer className="modal-card-foot">
-                <button onClick={props.hide} className="button is-success">
+                <button onClick={props.hide} className="button is-primary">
                   {props.buttonText}
                 </button>
                 <button onClick={props.hide} className="button">

@@ -26,15 +26,19 @@ const App: React.FC = () => {
     <div className="App">
       <Router>
         <FirebaseProvider>
-          <Navbar />
-          <Route exact path={ROUTES.HOME} component={HomePage} />
-          <Route path={ROUTES.POSTS} component={PostsPage} />
-          <Route path={ROUTES.POST_CREATE} component={PostCreatePage} />
-          <Route path={ROUTES.ABOUT} component={AboutPage} />
-          <Route path={ROUTES.CONTACT} component={ContactPage} />
-          <Route path={ROUTES.PROFILE} component={ProfilePage} />
-          <Route path={ROUTES.POST_VIEW} component={PostViewPage} />
-          <Footer />
+          <div className="conciso-app">
+            <Navbar />
+            <div className="conciso-app-content">
+              <Route exact path={ROUTES.HOME} component={HomePage} />
+              <Route path={ROUTES.POSTS} component={PostsPage} />
+              <Route path={ROUTES.POST_CREATE} component={PostCreatePage} />
+              <Route path={ROUTES.ABOUT} component={AboutPage} />
+              <Route path={ROUTES.CONTACT} component={ContactPage} />
+              <Route path={ROUTES.PROFILE} component={ProfilePage} />
+              <Route path={ROUTES.POST_VIEW} component={PostViewPage} />
+            </div>
+            <Footer />
+          </div>
         </FirebaseProvider>
       </Router>
     </div>

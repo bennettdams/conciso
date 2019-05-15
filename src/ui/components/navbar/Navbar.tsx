@@ -117,10 +117,14 @@ const Navbar: React.FC = () => {
                 onClick={toggleSignup}
                 className="button is-primary ripple"
               >
-                <strong>Sign up</strong>
+                <span className="has-text-weight-light is-uppercase">
+                  Sign up
+                </span>
               </button>
               <button onClick={toggleLogin} className="button">
-                Log in
+                <span className="has-text-weight-light is-uppercase">
+                  Log in
+                </span>
               </button>
             </div>
           </div>
