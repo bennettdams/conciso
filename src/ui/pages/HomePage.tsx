@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFirestore } from "../../data/context/firebase-context";
-import PostType from "../../types/PostType";
+import PostType from "../../types/IPostType";
 
 const HomePage: React.FC = () => {
   const firestore = useFirestore();
@@ -22,14 +22,12 @@ const HomePage: React.FC = () => {
     <div className="home-page container fade-in">
       <section className="section">
         <div className="hero-body">
-          <div className="container">
-            <h1 className="title is-size-1 has-text-primary is-family-secondary">
-              CONCISO
-            </h1>
-            <h2 className="subtitle is-size-3 is-italic is-family-primary">
-              INFORMATION THAT HONORS YOUR TIME.
-            </h2>
-          </div>
+          <h1 className="title is-size-1 has-text-primary has-text-centered is-family-secondary">
+            CONCISO
+          </h1>
+          <h2 className="subtitle is-size-3 has-text-centered is-italic is-family-primary">
+            INFORMATION THAT HONORS YOUR TIME.
+          </h2>
         </div>
       </section>
 

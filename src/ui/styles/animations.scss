@@ -1,0 +1,75 @@
+.fade-in {
+  animation: animation-fade-in 1s;
+  // height: 40vmin;
+  // pointer-events: none;
+}
+
+.fade-in-fast {
+  animation: animation-fade-in 0.3s;
+  // height: 40vmin;
+  // pointer-events: none;
+}
+
+.fade-in-slow {
+  animation: animation-fade-in 1.5s;
+  // height: 40vmin;
+  // pointer-events: none;
+}
+
+@keyframes animation-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes animation-fade-in-fast {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes animation-fade-in-slow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+$flow-to-right-duration: 0.2s;
+$flow-to-right-px: 15px;
+
+.flow-to-right {
+  animation: animation-flow-to-right $flow-to-right-duration;
+  transform: translate($flow-to-right-px, 0px);
+}
+
+.flow-to-right-reset {
+  animation: animation-flow-to-right-reset $flow-to-right-duration;
+  transform: translate(0, 0px);
+}
+
+@keyframes animation-flow-to-right {
+  from {
+    transform: translate(0px, 0px);
+  }
+  to {
+    transform: translate($flow-to-right-px, 0px);
+  }
+}
+
+@keyframes animation-flow-to-right-reset {
+  from {
+    transform: translate($flow-to-right-px, 0px);
+  }
+  to {
+    transform: translate(0px, 0px);
+  }
+}

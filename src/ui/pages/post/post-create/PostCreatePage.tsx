@@ -2,16 +2,24 @@ import React, { useState } from "react";
 import {
   useFirestore,
   getServerTimestamp
-} from "../../../data/context/firebase-context";
-import PageHeader from "../../components/page-header/PageHeader";
-import PostType from "../../../types/PostType";
+} from "../../../../data/context/firebase-context";
+import PageHeader from "../../../components/page-header/PageHeader";
+import { POST_CATEGORIES } from "../../../../constants/post/categories";
+import IPostType from "../../../../types/IPostType";
 
 const PostCreatePage: React.FC = () => {
   const [id, setId] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [descriptionShort, setDescriptionShort] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
   const [submitted, setSubmitted] = useState<boolean>(false);
   const firestore = useFirestore();
+
+  const handleChangeCategory = (event: React.FormEvent<HTMLSelectElement>) => {
+    const target = event.target as HTMLSelectElement;
+    setCategory(target.value);
+    console.log(target.value);
+  };
 
   const handleChangeInput = (
     event: React.FormEvent<HTMLInputElement>
@@ -44,14 +52,16 @@ const PostCreatePage: React.FC = () => {
   };
 
   const createPost = (): void => {
+    const post: IPostType = {
+      id,
+      title,
+      descriptionShort,
+      timestamp: getServerTimestamp() as firebase.firestore.Timestamp,
+      category: "asd"
+    };
     firestore
       .collection("posts")
-      .add({
-        id,
-        title,
-        descriptionShort,
-        timestamp: getServerTimestamp()
-      } as PostType)
+      .add(post)
       .then(ref => {
         console.log("Added document with ID: ", ref.id);
       });
@@ -110,9 +120,12 @@ const PostCreatePage: React.FC = () => {
                   <label className="label">Category</label>
                   <div className="control">
                     <span className="select">
-                      <select>
-                        <option>Life</option>
-                        <option>Tutorial</option>
+                      <select onChange={handleChangeCategory}>
+                        {POST_CATEGORIES.map(category => {
+                          return (
+                            <option key={category.id}>{category.name}</option>
+                          );
+                        })}
                       </select>
                     </span>
                   </div>

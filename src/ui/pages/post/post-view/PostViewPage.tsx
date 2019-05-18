@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import PageHeader from "../../components/page-header/PageHeader";
+import PageHeader from "../../../components/page-header/PageHeader";
 import { RouteComponentProps } from "react-router-dom";
-import PostType from "../../../types/PostType";
-import { useFirestore } from "../../../data/context/firebase-context";
-import { timestampToDateString } from "../../../util/timestampToDateString";
-import Chapter from "../../components/chapter/Chapter";
-import { IChapter } from "../../../types/IChapter";
+import { useFirestore } from "../../../../data/context/firebase-context";
+import { timestampToDateString } from "../../../../util/timestampToDateString";
+import Chapter from "../../../components/chapter/Chapter";
+import { IChapter } from "../../../../types/IChapter";
+import IPostType from "../../../../types/IPostType";
 
 type TParams = { id: string };
 
 const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
   const postId: string = match.params.id;
   const firestore = useFirestore();
-  const [post, setPost] = useState<PostType>();
+  const [post, setPost] = useState<IPostType>();
   const [chapters, setChapters] = useState<IChapter[]>();
   const [postDoc, setPostDoc] = useState<
     firebase.firestore.QueryDocumentSnapshot
@@ -27,7 +27,7 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           setPostDoc(doc);
-          setPost(doc.data() as PostType);
+          setPost(doc.data() as IPostType);
         });
       })
       .catch(error => {
@@ -50,7 +50,7 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
     <div className="post-view-page fade-in">
       <PageHeader title="" />
       {post && (
-        <div className="post-view-page-content">
+        <div className="post hoverable">
           <section className="section hero is-primary">
             <div className="hero-body">
               <div className="level">

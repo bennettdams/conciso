@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useFirestore } from "../../data/context/firebase-context";
-import PostType from "../../types/PostType";
-import PageHeader from "../components/page-header/PageHeader";
-import { timestampToDateString } from "../../util/timestampToDateString";
+import { useFirestore } from "../../../data/context/firebase-context";
+import PostType from "../../../types/IPostType";
+import PageHeader from "../../components/page-header/PageHeader";
+import { timestampToDateString } from "../../../util/timestampToDateString";
 import { Link } from "react-router-dom";
+import "./PostsPage.scss";
 
 const PostsPage: React.FC = () => {
   const firestore = useFirestore();
@@ -35,9 +36,18 @@ const PostsPage: React.FC = () => {
               >
                 <Link to={"post/" + post.id}>
                   <article className="message is-primary fade-in-slow">
-                    <div className="message-header">
-                      <h1 className="is-size-2">{post.title}</h1>
-                      <button className="delete" />
+                    <div className="message-header post-header">
+                      <div className="colums post-header is-multiline">
+                        <div className="column is-full">
+                          <h1 className="is-size-2">{post.title}</h1>
+                        </div>
+                        <div className="column is-full">
+                          <span className="is-size-5 has-text-weight-light has-text-grey-lighter">
+                            asd
+                          </span>
+                          <button className="delete is-pulled-right" />
+                        </div>
+                      </div>
                     </div>
                     <div className="message-body box">
                       <strong>{post.id}</strong>

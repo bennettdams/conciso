@@ -13,13 +13,13 @@ import { FirebaseProvider } from "./data/context/firebase-context";
 import "./ui/styles/global.scss";
 import HomePage from "./ui/pages/HomePage";
 import ContactPage from "./ui/pages/ContactPage";
-import PostsPage from "./ui/pages/PostsPage";
-import PostCreatePage from "./ui/pages/post/PostCreatePage";
+import PostsPage from "./ui/pages/posts/PostsPage";
+import PostCreatePage from "./ui/pages/post/post-create/PostCreatePage";
 import AboutPage from "./ui/pages/AboutPage";
 import Navbar from "./ui/components/navbar/Navbar";
 import Footer from "./ui/components/footer/Footer";
 import ProfilePage from "./ui/pages/ProfilePage";
-import PostViewPage from "./ui/pages/post/PostViewPage";
+import PostViewPage from "./ui/pages/post/post-view/PostViewPage";
 
 const App: React.FC = () => {
   return (

@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./Modal.scss";
-import { normalize } from "path";
 
 type ModalProps = {
   isShowing: boolean;
