@@ -6,6 +6,7 @@ import {
 import PageHeader from "../../../components/page-header/PageHeader";
 import { POST_CATEGORIES } from "../../../../constants/post/categories";
 import IPostType from "../../../../types/IPostType";
+import Editor from "../../../components/editor/Editor";
 
 const PostCreatePage: React.FC = () => {
   const [id, setId] = useState<string>("");
@@ -49,6 +50,7 @@ const PostCreatePage: React.FC = () => {
     setId("");
     setTitle("");
     setDescriptionShort("");
+    setCategory("");
   };
 
   const createPost = (): void => {
@@ -57,7 +59,7 @@ const PostCreatePage: React.FC = () => {
       title,
       descriptionShort,
       timestamp: getServerTimestamp() as firebase.firestore.Timestamp,
-      category: "asd"
+      category
     };
     firestore
       .collection("posts")
@@ -75,69 +77,7 @@ const PostCreatePage: React.FC = () => {
         <div className="container">
           <div className="columns is-centered">
             <div className="column is-half box">
-              <form onSubmit={handleSubmit}>
-                <div className="field">
-                  <label className="label">ID</label>
-                  <div className="control">
-                    <input
-                      name="inputId"
-                      className="input"
-                      type="text"
-                      placeholder="ID.."
-                      value={id}
-                      onChange={handleChangeInput}
-                    />
-                  </div>
-                </div>
-                <div className="field">
-                  <label className="label">Title</label>
-                  <div className="control">
-                    <input
-                      name="inputTitle"
-                      className="input"
-                      type="text"
-                      placeholder="Title.."
-                      value={title}
-                      onChange={handleChangeInput}
-                    />
-                  </div>
-                </div>
-                <div className="field">
-                  <label className="label">Short description</label>
-                  <div className="control">
-                    <input
-                      name="inputDescriptionShort"
-                      className="input"
-                      type="text"
-                      placeholder="Short description.."
-                      value={descriptionShort}
-                      onChange={handleChangeInput}
-                    />
-                  </div>
-                </div>
-
-                <div className="field">
-                  <label className="label">Category</label>
-                  <div className="control">
-                    <span className="select">
-                      <select onChange={handleChangeCategory}>
-                        {POST_CATEGORIES.map(category => {
-                          return (
-                            <option key={category.id}>{category.name}</option>
-                          );
-                        })}
-                      </select>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="buttons">
-                  <button className="button is-primary" type="submit">
-                    Create Post
-                  </button>
-                  <button className="button is-link">Save for later</button>
-                </div>
-              </form>
+              <Editor />
             </div>
           </div>
           <br />
