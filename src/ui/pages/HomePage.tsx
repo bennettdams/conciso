@@ -66,12 +66,12 @@ const HomePage: React.FC = () => {
             <div className="tile">
               <div className="tile is-parent is-vertical">
                 <article className="tile is-child notification is-primary">
-                  <p className="title">Vertical...</p>
-                  <p className="subtitle">Top tile</p>
+                  <p className="title">Tile 1</p>
+                  <p className="subtitle">Tile 1 Title</p>
                 </article>
                 <article className="tile is-child notification is-warning">
-                  <p className="title">...tiles</p>
-                  <p className="subtitle">Bottom tile</p>
+                  <p className="title">Tile 2</p>
+                  <p className="subtitle">Tile 2 title</p>
                 </article>
               </div>
               <div className="tile is-parent">

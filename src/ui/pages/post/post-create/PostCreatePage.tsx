@@ -6,7 +6,7 @@ import {
 import PageHeader from "../../../components/page-header/PageHeader";
 import { POST_CATEGORIES } from "../../../../constants/post/categories";
 import IPostType from "../../../../types/IPostType";
-import Editor from "../../../components/editor/Editor";
+import InputEditor from "../../../components/editor/InputEditor";
 
 const PostCreatePage: React.FC = () => {
   const [id, setId] = useState<string>("");
@@ -76,8 +76,8 @@ const PostCreatePage: React.FC = () => {
       <section className="section is-fullheight">
         <div className="container">
           <div className="columns is-centered">
-            <div className="column is-half box">
-              <Editor />
+            <div className="column is-half">
+              <InputEditor />
             </div>
           </div>
           <br />

@@ -1,0 +1,11 @@
+@import "src/ui/styles/global.scss";
+
+.input-editor {
+  color: $primary;
+}
+
+.input-editor-bullet {
+  list-style-type: circle;
+  list-style-position: outside;
+  list-style-image: none;
+}
