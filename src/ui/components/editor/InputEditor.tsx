@@ -5,26 +5,15 @@ import "./InputEditor.scss";
 
 const InputEditor = () => {
   const [editorState, setEditorState] = useState<EditorState>(
-    EditorState.createEmpty()
+    RichUtils.toggleBlockType(EditorState.createEmpty(), "unordered-list-item")
   );
   const editor = useRef<Editor>(null);
-
-  React.useEffect(() => {
-    toggleBlockType();
-  }, []);
-
-  const toggleBlockType = () => {
-    setEditorState(
-      RichUtils.toggleBlockType(editorState, "unordered-list-item")
-    );
-  };
 
   const customBlockStyle = (contentBlock: ContentBlock) => {
     const type = contentBlock.getType();
     switch (type) {
       case "unordered-list-item":
         return "input-editor-bullet";
-        break;
       default:
         return "input-editor";
     }

@@ -7,40 +7,18 @@ import PageHeader from "../../../components/page-header/PageHeader";
 import { POST_CATEGORIES } from "../../../../constants/post/categories";
 import IPostType from "../../../../types/IPostType";
 import InputEditor from "../../../components/editor/InputEditor";
+import Dropdown from "../../../components/dropdown/Dropdown";
+import { IChapter } from "../../../../types/IChapter";
+import { IDropdownItem } from "../../../../types/IDropdownItem";
 
 const PostCreatePage: React.FC = () => {
   const [id, setId] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [descriptionShort, setDescriptionShort] = useState<string>("");
   const [category, setCategory] = useState<string>("");
+  const [chapters, setChapters] = useState<IChapter[]>([]);
   const [submitted, setSubmitted] = useState<boolean>(false);
   const firestore = useFirestore();
-
-  const handleChangeCategory = (event: React.FormEvent<HTMLSelectElement>) => {
-    const target = event.target as HTMLSelectElement;
-    setCategory(target.value);
-    console.log(target.value);
-  };
-
-  const handleChangeInput = (
-    event: React.FormEvent<HTMLInputElement>
-  ): void => {
-    event.preventDefault();
-    const target = event.target as HTMLInputElement;
-    switch (target.name) {
-      case "inputId":
-        setId(target.value);
-        break;
-      case "inputTitle":
-        setTitle(target.value);
-        break;
-      case "inputDescriptionShort":
-        setDescriptionShort(target.value);
-        break;
-      default:
-        break;
-    }
-  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -75,8 +53,69 @@ const PostCreatePage: React.FC = () => {
 
       <section className="section is-fullheight">
         <div className="container">
-          <div className="columns is-centered">
-            <div className="column is-half">
+          <div className="columns is-multiline">
+            <div className="column is-half is-offset-one-quarter box">
+              <form onSubmit={handleSubmit}>
+                <div className="field">
+                  <label className="label">ID</label>
+                  <div className="control">
+                    <input
+                      name="inputId"
+                      className="input"
+                      type="text"
+                      placeholder="ID.."
+                      value={id}
+                      onChange={e => setId(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Title</label>
+                  <div className="control">
+                    <input
+                      name="inputTitle"
+                      className="input"
+                      type="text"
+                      placeholder="Title.."
+                      value={title}
+                      onChange={e => setTitle(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Short description</label>
+                  <div className="control">
+                    <input
+                      name="inputDescriptionShort"
+                      className="input"
+                      type="text"
+                      placeholder="Short description.."
+                      value={descriptionShort}
+                      onChange={e => setDescriptionShort(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label">Category</label>
+                  <div className="codntrol">
+                    <Dropdown
+                      dropdownItems={POST_CATEGORIES.map(category => {
+                        return { id: category.id, text: category.name };
+                      })}
+                    />
+                  </div>
+                </div>
+
+                <div className="buttons">
+                  <button className="button is-primary" type="submit">
+                    Create Post
+                  </button>
+                  <button className="button is-link">Save for later</button>
+                </div>
+              </form>
+            </div>
+            <div className="column is-three-fifths is-offset-one-fifth">
               <InputEditor />
             </div>
           </div>

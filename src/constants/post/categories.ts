@@ -1,4 +1,6 @@
-export const POST_CATEGORIES = [
+import { ICategory } from "../../types/ICategory";
+
+export const POST_CATEGORIES: ICategory[] = [
   {
     id: 1,
     name: "Life"
