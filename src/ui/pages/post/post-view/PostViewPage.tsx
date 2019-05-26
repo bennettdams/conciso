@@ -14,21 +14,32 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
   const firestore = useFirestore();
   const [post, setPost] = useState<IPostType>();
   const [chapters, setChapters] = useState<IChapter[]>();
-  const [postDoc, setPostDoc] = useState<
-    firebase.firestore.QueryDocumentSnapshot
-  >();
+  const [postDoc, setPostDoc] = useState<firebase.firestore.DocumentSnapshot>();
 
   // GET POST FROM ROUTER PARAM
   useEffect(() => {
+    console.log("get post");
     firestore
       .collection("posts")
-      .where("id", "==", postId)
+      .doc(postId)
       .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+      .then(doc => {
+        if (doc.exists) {
           setPostDoc(doc);
-          setPost(doc.data() as IPostType);
-        });
+          const data = doc.data();
+          if (data) {
+            const post: IPostType = {
+              id: doc.id,
+              title: data.title,
+              descriptionShort: data.descriptionShort,
+              category: data.category,
+              timestamp: data.timestamp
+            };
+            setPost(post);
+          }
+        } else {
+          console.log("No such document!");
+        }
       })
       .catch(error => {
         throw new Error(error);
@@ -41,7 +52,18 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
         .collection("chapters")
         .get()
         .then(a => {
-          setChapters(a.docs.map(doc => doc.data() as IChapter));
+          setChapters(
+            a.docs.map(doc => {
+              const data = doc.data();
+              const chapter: IChapter = {
+                id: doc.id,
+                title: data.title,
+                subtitle: data.subtitle,
+                content: data.content
+              };
+              return chapter;
+            })
+          );
         });
     }
   }, [postDoc]);

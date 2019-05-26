@@ -5,6 +5,7 @@ import PageHeader from "../../components/page-header/PageHeader";
 import { timestampToDateString } from "../../../util/timestampToDateString";
 import { Link } from "react-router-dom";
 import "./PostsPage.scss";
+import IPostType from "../../../types/IPostType";
 
 const PostsPage: React.FC = () => {
   const firestore = useFirestore();
@@ -16,7 +17,19 @@ const PostsPage: React.FC = () => {
       .get()
       .then(snapshot => {
         // @ts-ignore
-        setPosts(snapshot.docs.map(doc => doc.data()));
+        setPosts(
+          snapshot.docs.map(doc => {
+            const data = doc.data();
+            const post: IPostType = {
+              id: doc.id,
+              title: data.title,
+              descriptionShort: data.descriptionShort,
+              category: data.category,
+              timestamp: data.timestamp
+            };
+            return post;
+          })
+        );
       })
       .catch(err => {
         console.log("Error getting documents", err);
@@ -43,7 +56,7 @@ const PostsPage: React.FC = () => {
                         </div>
                         <div className="column is-full">
                           <span className="is-size-5 has-text-weight-light has-text-grey-lighter">
-                            asd
+                            {post.descriptionShort}
                           </span>
                           <button className="delete is-pulled-right" />
                         </div>
@@ -51,8 +64,6 @@ const PostsPage: React.FC = () => {
                     </div>
                     <div className="message-body box">
                       <strong>{post.id}</strong>
-                      <br />
-                      {post.descriptionShort}
                       <br />
                       {timestampToDateString(post.timestamp)}
                     </div>

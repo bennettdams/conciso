@@ -1,0 +1,27 @@
+@import "src/ui/styles/global.scss";
+
+$border-size: 2px;
+
+.title-input {
+  color: grey;
+  background-color: rgba(0, 0, 0, 0);
+  border-top: 0px solid #2eb9ce;
+  border-right: 0px solid #2eb9ce;
+  border-left: 0px solid #2eb9ce;
+  border-bottom: $border-size solid $primary;
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.description-short-input {
+  color: grey;
+  background-color: rgba(0, 0, 0, 0);
+  border-top: 0px solid #2eb9ce;
+  border-right: 0px solid #2eb9ce;
+  border-left: 0px solid #2eb9ce;
+  border-bottom: $border-size solid $primary;
+  &:focus {
+    box-shadow: none;
+  }
+}

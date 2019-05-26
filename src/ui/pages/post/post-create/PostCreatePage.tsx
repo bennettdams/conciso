@@ -10,8 +10,9 @@ import InputEditor from "../../../components/editor/InputEditor";
 import Dropdown from "../../../components/dropdown/Dropdown";
 import { IChapter } from "../../../../types/IChapter";
 
+import "./PostCreatePage.scss";
+
 interface IState {
-  id: string;
   title: string;
   descriptionShort: string;
   category: string;
@@ -21,7 +22,6 @@ interface IState {
 
 type ActionType =
   | { type: "reset" }
-  | { type: "id"; id: string }
   | { type: "title"; title: string }
   | { type: "descriptionShort"; descriptionShort: string }
   | { type: "category"; category: string }
@@ -29,7 +29,6 @@ type ActionType =
   | { type: "submitted"; submitted: boolean };
 
 const initialState: IState = {
-  id: "",
   title: "",
   descriptionShort: "",
   category: "",
@@ -39,8 +38,6 @@ const initialState: IState = {
 
 const formReducer = (state: IState, action: ActionType) => {
   switch (action.type) {
-    case "id":
-      return { ...state, id: action.id };
     case "title":
       return { ...state, title: action.title };
     case "descriptionShort":
@@ -54,7 +51,6 @@ const formReducer = (state: IState, action: ActionType) => {
     case "reset":
       return {
         ...state,
-        id: "",
         title: "",
         descriptionShort: "",
         category: ""
@@ -66,7 +62,7 @@ const formReducer = (state: IState, action: ActionType) => {
 
 const PostCreatePage: React.FC = () => {
   const [
-    { id, title, descriptionShort, category, chapters, submitted },
+    { title, descriptionShort, category, chapters, submitted },
     dispatch
   ] = useReducer(formReducer, initialState);
   const firestore = useFirestore();
@@ -79,14 +75,24 @@ const PostCreatePage: React.FC = () => {
     dispatch({ type: "reset" });
   };
 
+  const handleKeyPress = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ): void => {
+    if (event && event.keyCode && event.keyCode === 13) {
+      event.preventDefault();
+      console.log("enter");
+    }
+  };
+
   const createPost = (): void => {
     const post: IPostType = {
-      id,
+      id: "",
       title,
       descriptionShort,
       timestamp: getServerTimestamp() as firebase.firestore.Timestamp,
       category
     };
+    delete post.id;
     firestore
       .collection("posts")
       .add(post)
@@ -102,49 +108,41 @@ const PostCreatePage: React.FC = () => {
     <div className="post-create-page container fade-in">
       <PageHeader title="CREATE POST" />
 
-      <section className="section is-fullheight">
+      <section className="section">
         <div className="container">
-          <div className="columns is-multiline">
-            <div className="column is-half is-offset-one-quarter box">
-              <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
+            <div className="columns is-multiline">
+              {/*  */}
+              <div className="column is-full">
                 <div className="field">
-                  <label className="label">ID</label>
-                  <div className="control">
-                    <input
-                      name="inputId"
-                      className="input"
-                      type="text"
-                      placeholder="ID.."
-                      value={id}
-                      onChange={e =>
-                        dispatch({ type: "id", id: e.target.value })
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="field">
-                  <label className="label">Title</label>
+                  {/* <label className="label">Title</label> */}
                   <div className="control">
                     <input
                       name="inputTitle"
-                      className="input"
+                      autoComplete="off"
+                      className="input title-input is-size-2"
                       type="text"
-                      placeholder="Title.."
+                      placeholder="Enter a title.."
                       value={title}
                       onChange={e =>
                         dispatch({ type: "title", title: e.target.value })
                       }
+                      onKeyDown={handleKeyPress}
                     />
                   </div>
                 </div>
+              </div>
+              {/*  */}
+              <div className="column is-three-fifths is-offset-one-fifth">
                 <div className="field">
-                  <label className="label">Short description</label>
+                  {/* <label className="label">Short description</label> */}
                   <div className="control">
                     <input
                       name="inputDescriptionShort"
-                      className="input"
+                      autoComplete="off"
+                      className="input description-short-input is-size-4"
                       type="text"
-                      placeholder="Short description.."
+                      placeholder="Describe your post.."
                       value={descriptionShort}
                       onChange={e =>
                         dispatch({
@@ -155,7 +153,13 @@ const PostCreatePage: React.FC = () => {
                     />
                   </div>
                 </div>
-
+              </div>
+              {/*  */}
+            </div>
+            {/*  */}
+            <div className="columns is-multiline">
+              {/*  */}
+              <div className="column is-three-fifths is-offset-one-fifth">
                 <div className="field">
                   <label className="label">Category</label>
                   <div className="codntrol">
@@ -167,19 +171,30 @@ const PostCreatePage: React.FC = () => {
                     />
                   </div>
                 </div>
-
+              </div>
+              {/*  */}
+            </div>
+            {/*  */}
+            <div className="columns">
+              <div className="column is-full">
                 <div className="buttons">
                   <button type="submit" className="button is-primary">
                     Create Post
                   </button>
                   <button className="button is-link">Save for later</button>
                 </div>
-              </form>
+              </div>
             </div>
-            <div className="column is-three-fifths is-offset-one-fifth">
-              <InputEditor />
+            {/*  */}
+            <div className="columns">
+              <div className="column is-full">
+                <div className="column is-three-fifths is-offset-one-fifth">
+                  <InputEditor />
+                </div>
+              </div>
             </div>
-          </div>
+            {/*  */}
+          </form>
           <br />
           <br />
           <br />

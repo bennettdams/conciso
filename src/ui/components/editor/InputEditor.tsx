@@ -20,15 +20,13 @@ const InputEditor = () => {
   };
 
   return (
-    <div className="">
-      <div className="input-editor box content">
-        <Editor
-          ref={editor}
-          editorState={editorState}
-          onChange={editorState => setEditorState(editorState)}
-          blockStyleFn={customBlockStyle}
-        />
-      </div>
+    <div className="input-editor box content">
+      <Editor
+        ref={editor}
+        editorState={editorState}
+        onChange={editorState => setEditorState(editorState)}
+        blockStyleFn={customBlockStyle}
+      />
     </div>
   );
 };
