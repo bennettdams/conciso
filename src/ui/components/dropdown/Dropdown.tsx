@@ -2,18 +2,27 @@ import React, { useState, useRef } from "react";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import { IDropdownItem } from "../../../types/IDropdownItem";
 
+import "./Dropdown.scss";
+
 interface DropdownProps {
   dropdownItems: IDropdownItem[];
+  dispatchSelected: (value: string) => any;
 }
 
 const Dropdown = (props: DropdownProps) => {
   const [doCollapse, setDoCollapse] = useState<boolean>(false);
   const dropDownRef = useRef<HTMLDivElement>(null);
+  const [selected, setSelected] = useState<string | null>(null);
 
   useOutsideClick(dropDownRef, () => {
-    console.log("click outside dropdown");
     setDoCollapse(false);
   });
+
+  const handleDropdownItemClick = (dropdownItem: IDropdownItem): void => {
+    props.dispatchSelected(dropdownItem.text);
+    setDoCollapse(false);
+    setSelected(dropdownItem.text);
+  };
 
   return (
     <div
@@ -22,12 +31,13 @@ const Dropdown = (props: DropdownProps) => {
     >
       <div className="dropdown-trigger">
         <button
+          type="button"
           className="button"
           aria-haspopup="true"
           aria-controls="dropdown-menu"
           onClick={() => setDoCollapse(!doCollapse)}
         >
-          <span>Select category</span>
+          {selected ? <span>{selected}</span> : <span>Select category</span>}
           <span className="icon is-small">
             <i className="fas fa-angle-down" aria-hidden="true" />
           </span>
@@ -38,7 +48,11 @@ const Dropdown = (props: DropdownProps) => {
           <div className="dropdown-content">
             {props.dropdownItems.map(dropdownItem => {
               return (
-                <div key={dropdownItem.id} className="dropdown-item">
+                <div
+                  key={dropdownItem.id}
+                  onClick={() => handleDropdownItemClick(dropdownItem)}
+                  className="dropdown-item"
+                >
                   {dropdownItem.text}
                 </div>
               );

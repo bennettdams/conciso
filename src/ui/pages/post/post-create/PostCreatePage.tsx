@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import {
   useFirestore,
   getServerTimestamp
@@ -9,26 +9,74 @@ import IPostType from "../../../../types/IPostType";
 import InputEditor from "../../../components/editor/InputEditor";
 import Dropdown from "../../../components/dropdown/Dropdown";
 import { IChapter } from "../../../../types/IChapter";
-import { IDropdownItem } from "../../../../types/IDropdownItem";
+
+interface IState {
+  id: string;
+  title: string;
+  descriptionShort: string;
+  category: string;
+  chapters: IChapter[];
+  submitted: boolean;
+}
+
+type ActionType =
+  | { type: "reset" }
+  | { type: "id"; id: string }
+  | { type: "title"; title: string }
+  | { type: "descriptionShort"; descriptionShort: string }
+  | { type: "category"; category: string }
+  | { type: "chapters"; chapters: IChapter[] }
+  | { type: "submitted"; submitted: boolean };
+
+const initialState: IState = {
+  id: "",
+  title: "",
+  descriptionShort: "",
+  category: "",
+  chapters: [],
+  submitted: false
+};
+
+const formReducer = (state: IState, action: ActionType) => {
+  switch (action.type) {
+    case "id":
+      return { ...state, id: action.id };
+    case "title":
+      return { ...state, title: action.title };
+    case "descriptionShort":
+      return { ...state, descriptionShort: action.descriptionShort };
+    case "category":
+      return { ...state, category: action.category };
+    case "chapters":
+      return { ...state, chapters: action.chapters };
+    case "submitted":
+      return { ...state, submitted: action.submitted };
+    case "reset":
+      return {
+        ...state,
+        id: "",
+        title: "",
+        descriptionShort: "",
+        category: ""
+      };
+    default:
+      throw new Error();
+  }
+};
 
 const PostCreatePage: React.FC = () => {
-  const [id, setId] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
-  const [descriptionShort, setDescriptionShort] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
-  const [chapters, setChapters] = useState<IChapter[]>([]);
-  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [
+    { id, title, descriptionShort, category, chapters, submitted },
+    dispatch
+  ] = useReducer(formReducer, initialState);
   const firestore = useFirestore();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    setSubmitted(true);
+    dispatch({ type: "submitted", submitted: true });
     console.log("Submitted!");
     createPost();
-    setId("");
-    setTitle("");
-    setDescriptionShort("");
-    setCategory("");
+    dispatch({ type: "reset" });
   };
 
   const createPost = (): void => {
@@ -46,6 +94,9 @@ const PostCreatePage: React.FC = () => {
         console.log("Added document with ID: ", ref.id);
       });
   };
+
+  const handleSelectedCategory = (categorySelected: string) =>
+    dispatch({ type: "category", category: categorySelected });
 
   return (
     <div className="post-create-page container fade-in">
@@ -65,7 +116,9 @@ const PostCreatePage: React.FC = () => {
                       type="text"
                       placeholder="ID.."
                       value={id}
-                      onChange={e => setId(e.target.value)}
+                      onChange={e =>
+                        dispatch({ type: "id", id: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -78,7 +131,9 @@ const PostCreatePage: React.FC = () => {
                       type="text"
                       placeholder="Title.."
                       value={title}
-                      onChange={e => setTitle(e.target.value)}
+                      onChange={e =>
+                        dispatch({ type: "title", title: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -91,7 +146,12 @@ const PostCreatePage: React.FC = () => {
                       type="text"
                       placeholder="Short description.."
                       value={descriptionShort}
-                      onChange={e => setDescriptionShort(e.target.value)}
+                      onChange={e =>
+                        dispatch({
+                          type: "descriptionShort",
+                          descriptionShort: e.target.value
+                        })
+                      }
                     />
                   </div>
                 </div>
@@ -100,6 +160,7 @@ const PostCreatePage: React.FC = () => {
                   <label className="label">Category</label>
                   <div className="codntrol">
                     <Dropdown
+                      dispatchSelected={handleSelectedCategory}
                       dropdownItems={POST_CATEGORIES.map(category => {
                         return { id: category.id, text: category.name };
                       })}
@@ -108,7 +169,7 @@ const PostCreatePage: React.FC = () => {
                 </div>
 
                 <div className="buttons">
-                  <button className="button is-primary" type="submit">
+                  <button type="submit" className="button is-primary">
                     Create Post
                   </button>
                   <button className="button is-link">Save for later</button>
