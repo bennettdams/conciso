@@ -28,9 +28,11 @@ const Chapter: React.FC<ChapterProps> = props => {
               <small>{props.chapter.subtitle}</small>
               <br />
               <br />
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-              ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas
-              non massa sem. Etiam finibus odio quis feugiat facilisis.
+              <ul>
+                {props.chapter.content.map(point => {
+                  return <li key={point.key}>{point.text}</li>;
+                })}
+              </ul>
               <br />
             </div>
           </div>

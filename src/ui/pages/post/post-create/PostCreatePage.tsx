@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import {
   useFirestore,
   getServerTimestamp
@@ -8,9 +8,10 @@ import { POST_CATEGORIES } from "../../../../constants/post/categories";
 import IPostType from "../../../../types/IPostType";
 import InputEditor from "../../../components/editor/InputEditor";
 import Dropdown from "../../../components/dropdown/Dropdown";
-import { IChapter } from "../../../../types/IChapter";
+import { IChapter, IChapterContent } from "../../../../types/IChapter";
 
 import "./PostCreatePage.scss";
+import { RawDraftContentState } from "draft-js";
 
 interface IState {
   title: string;
@@ -18,6 +19,7 @@ interface IState {
   category: string;
   chapters: IChapter[];
   submitted: boolean;
+  chapterCount: number;
 }
 
 type ActionType =
@@ -26,14 +28,17 @@ type ActionType =
   | { type: "descriptionShort"; descriptionShort: string }
   | { type: "category"; category: string }
   | { type: "chapters"; chapters: IChapter[] }
-  | { type: "submitted"; submitted: boolean };
+  | { type: "add_chapter"; chapter: IChapter }
+  | { type: "submitted"; submitted: boolean }
+  | { type: "chapterCount"; chapterCounter: number };
 
 const initialState: IState = {
   title: "",
   descriptionShort: "",
   category: "",
   chapters: [],
-  submitted: false
+  submitted: false,
+  chapterCount: 1
 };
 
 const formReducer = (state: IState, action: ActionType) => {
@@ -46,14 +51,19 @@ const formReducer = (state: IState, action: ActionType) => {
       return { ...state, category: action.category };
     case "chapters":
       return { ...state, chapters: action.chapters };
+    case "add_chapter":
+      return { ...state, chapter: action.chapter };
     case "submitted":
       return { ...state, submitted: action.submitted };
+    case "chapterCount":
+      return { ...state, chapterCount: action.chapterCounter };
     case "reset":
       return {
         ...state,
         title: "",
         descriptionShort: "",
-        category: ""
+        category: "",
+        chapterCount: 1
       };
     default:
       throw new Error();
@@ -75,6 +85,26 @@ const PostCreatePage: React.FC = () => {
     dispatch({ type: "reset" });
   };
 
+  const handleEditorContentChange = (rawContent: RawDraftContentState) => {
+    const chapterContent: IChapterContent = {
+      key: rawContent.blocks[0].key,
+      type: rawContent.blocks[0].type,
+      text: rawContent.blocks[0].text
+    };
+
+    const chapter: IChapter = {
+      id: "1",
+      title: "Chapter title 1",
+      subtitle: "subChapter subtitle 1",
+      content: [chapterContent]
+    };
+    dispatch({ type: "chapters", chapters: [chapter] });
+  };
+
+  useEffect(() => {
+    console.table("chapters: ", chapters);
+  }, [chapters]);
+
   const handleKeyPress = (
     event: React.KeyboardEvent<HTMLInputElement>
   ): void => {
@@ -90,7 +120,8 @@ const PostCreatePage: React.FC = () => {
       title,
       descriptionShort,
       timestamp: getServerTimestamp() as firebase.firestore.Timestamp,
-      category
+      category,
+      chapters
     };
     delete post.id;
     firestore
@@ -157,18 +188,37 @@ const PostCreatePage: React.FC = () => {
               {/*  */}
             </div>
             {/*  */}
-            <div className="columns is-multiline">
+            <div className="columns is-multiline margin-big">
               {/*  */}
-              <div className="column is-three-fifths is-offset-one-fifth">
-                <div className="field">
-                  <label className="label">Category</label>
-                  <div className="codntrol">
-                    <Dropdown
-                      dispatchSelected={handleSelectedCategory}
-                      dropdownItems={POST_CATEGORIES.map(category => {
-                        return { id: category.id, text: category.name };
-                      })}
-                    />
+              <div className="column is-full">
+                <div className="level">
+                  <div className="level-left">
+                    <div className="level-item">
+                      <p className="subtitle is-5">CATEGORY</p>
+                      <div className="field">
+                        <div className="control">
+                          <Dropdown
+                            dispatchSelected={handleSelectedCategory}
+                            dropdownItems={POST_CATEGORIES.map(category => {
+                              return { id: category.id, text: category.name };
+                            })}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="level-right">
+                    <div className="level-item">
+                      <div className="buttons">
+                        <button type="submit" className="button is-primary">
+                          Create Post
+                        </button>
+                        <button className="button is-link">
+                          Save for later
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -177,19 +227,8 @@ const PostCreatePage: React.FC = () => {
             {/*  */}
             <div className="columns">
               <div className="column is-full">
-                <div className="buttons">
-                  <button type="submit" className="button is-primary">
-                    Create Post
-                  </button>
-                  <button className="button is-link">Save for later</button>
-                </div>
-              </div>
-            </div>
-            {/*  */}
-            <div className="columns">
-              <div className="column is-full">
                 <div className="column is-three-fifths is-offset-one-fifth">
-                  <InputEditor />
+                  <InputEditor receiveContent={handleEditorContentChange} />
                 </div>
               </div>
             </div>

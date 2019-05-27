@@ -25,6 +25,7 @@ const PostsPage: React.FC = () => {
               title: data.title,
               descriptionShort: data.descriptionShort,
               category: data.category,
+              chapters: data.chapters,
               timestamp: data.timestamp
             };
             return post;

@@ -13,8 +13,7 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
   const postId: string = match.params.id;
   const firestore = useFirestore();
   const [post, setPost] = useState<IPostType>();
-  const [chapters, setChapters] = useState<IChapter[]>();
-  const [postDoc, setPostDoc] = useState<firebase.firestore.DocumentSnapshot>();
+  // const [postDoc, setPostDoc] = useState<firebase.firestore.DocumentSnapshot>();
 
   // GET POST FROM ROUTER PARAM
   useEffect(() => {
@@ -25,7 +24,7 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
       .get()
       .then(doc => {
         if (doc.exists) {
-          setPostDoc(doc);
+          // setPostDoc(doc);
           const data = doc.data();
           if (data) {
             const post: IPostType = {
@@ -33,9 +32,11 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
               title: data.title,
               descriptionShort: data.descriptionShort,
               category: data.category,
+              chapters: data.chapters,
               timestamp: data.timestamp
             };
             setPost(post);
+            console.log(post.chapters);
           }
         } else {
           console.log("No such document!");
@@ -46,27 +47,27 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
       });
   }, [firestore, postId]);
 
-  useEffect(() => {
-    if (postDoc) {
-      postDoc.ref
-        .collection("chapters")
-        .get()
-        .then(a => {
-          setChapters(
-            a.docs.map(doc => {
-              const data = doc.data();
-              const chapter: IChapter = {
-                id: doc.id,
-                title: data.title,
-                subtitle: data.subtitle,
-                content: data.content
-              };
-              return chapter;
-            })
-          );
-        });
-    }
-  }, [postDoc]);
+  // useEffect(() => {
+  //   if (postDoc) {
+  //     postDoc.ref
+  //       .collection("chapters")
+  //       .get()
+  //       .then(a => {
+  //         setChapters(
+  //           a.docs.map(doc => {
+  //             const data = doc.data();
+  //             const chapter: IChapter = {
+  //               id: doc.id,
+  //               title: data.title,
+  //               subtitle: data.subtitle,
+  //               content: data.content
+  //             };
+  //             return chapter;
+  //           })
+  //         );
+  //       });
+  //   }
+  // }, [postDoc]);
 
   return (
     <div className="post-view-page fade-in">
@@ -129,8 +130,8 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
           </section>
           <section className="section chapters">
             <div className="columns is-multiline">
-              {chapters &&
-                chapters.map(chapter => {
+              {post.chapters &&
+                post.chapters.map(chapter => {
                   return (
                     <div
                       key={chapter.id}
