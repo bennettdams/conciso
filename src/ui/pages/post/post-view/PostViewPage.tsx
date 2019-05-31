@@ -47,28 +47,6 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
       });
   }, [firestore, postId]);
 
-  // useEffect(() => {
-  //   if (postDoc) {
-  //     postDoc.ref
-  //       .collection("chapters")
-  //       .get()
-  //       .then(a => {
-  //         setChapters(
-  //           a.docs.map(doc => {
-  //             const data = doc.data();
-  //             const chapter: IChapter = {
-  //               id: doc.id,
-  //               title: data.title,
-  //               subtitle: data.subtitle,
-  //               content: data.content
-  //             };
-  //             return chapter;
-  //           })
-  //         );
-  //       });
-  //   }
-  // }, [postDoc]);
-
   return (
     <div className="post-view-page fade-in">
       <PageHeader title="" />
@@ -109,21 +87,6 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
                       </p>
                     </div>
                   </div>
-                  {/* <div className="level-item">
-                    <div>
-                      <span className="icon has-text-info">
-                        <i className="fas fa-info-circle">COINCO</i>
-                      </span>
-                      <br />
-                      <span className="icon has-text-info">
-                        <i className="fas fa-info-circle">SAVE FOR LATER</i>
-                      </span>
-                      <br />
-                      <span className="icon has-text-info">
-                        <i className="fas fa-info-circle">SHARE</i>
-                      </span>
-                    </div>
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -131,7 +94,7 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
           <section className="section chapters">
             <div className="columns is-multiline">
               {post.chapters &&
-                post.chapters.map(chapter => {
+                post.chapters.map((chapter: IChapter) => {
                   return (
                     <div
                       key={chapter.id}

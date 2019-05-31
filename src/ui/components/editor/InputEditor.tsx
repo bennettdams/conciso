@@ -14,7 +14,7 @@ interface InputEditorProps {
   receiveContent: (rawContent: RawDraftContentState) => void;
 }
 
-const InputEditor = (props: InputEditorProps) => {
+const InputEditor: React.FC<InputEditorProps> = props => {
   const [editorState, setEditorState] = useState<EditorState>(
     RichUtils.toggleBlockType(EditorState.createEmpty(), "unordered-list-item")
   );

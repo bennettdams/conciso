@@ -2,14 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./Modal.scss";
 
-type ModalProps = {
+interface ModalProps {
   isShowing: boolean;
   hide: () => void;
   title: string;
   buttonText: string;
-};
+}
 
-// @ts-ignore
 const Modal: React.FC<ModalProps> = props =>
   props.isShowing
     ? ReactDOM.createPortal(

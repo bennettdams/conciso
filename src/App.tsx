@@ -14,7 +14,7 @@ import "./ui/styles/global.scss";
 import HomePage from "./ui/pages/HomePage";
 import ContactPage from "./ui/pages/ContactPage";
 import PostsPage from "./ui/pages/posts/PostsPage";
-import PostCreatePage from "./ui/pages/post/post-create/PostCreatePage";
+import PostCreatePage from "./ui/pages/post/post-create/page/PostCreatePage";
 import AboutPage from "./ui/pages/AboutPage";
 import Navbar from "./ui/components/navbar/Navbar";
 import Footer from "./ui/components/footer/Footer";

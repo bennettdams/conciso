@@ -1,10 +1,10 @@
 import React from "react";
 import Modal from "./Modal";
 
-type LoginModalProps = {
+interface LoginModalProps {
   isShowing: boolean;
   hide: () => void;
-};
+}
 
 const LoginModal: React.FC<LoginModalProps> = props => {
   return (

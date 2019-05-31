@@ -2,16 +2,15 @@ import React, { useReducer, useEffect } from "react";
 import {
   useFirestore,
   getServerTimestamp
-} from "../../../../data/context/firebase-context";
-import PageHeader from "../../../components/page-header/PageHeader";
-import { POST_CATEGORIES } from "../../../../constants/post/categories";
-import IPostType from "../../../../types/IPostType";
-import InputEditor from "../../../components/editor/InputEditor";
-import Dropdown from "../../../components/dropdown/Dropdown";
-import { IChapter, IChapterContent } from "../../../../types/IChapter";
-
+} from "../../../../../data/context/firebase-context";
+import PageHeader from "../../../../components/page-header/PageHeader";
+import { POST_CATEGORIES } from "../../../../../constants/post/categories";
+import IPostType from "../../../../../types/IPostType";
+import Dropdown from "../../../../components/dropdown/Dropdown";
+import { IChapter } from "../../../../../types/IChapter";
 import "./PostCreatePage.scss";
-import { RawDraftContentState } from "draft-js";
+
+import PostCreateChapter from "../chapter/PostCreateChapter";
 
 interface IState {
   title: string;
@@ -84,26 +83,6 @@ const PostCreatePage: React.FC = () => {
     createPost();
     dispatch({ type: "reset" });
   };
-
-  const handleEditorContentChange = (rawContent: RawDraftContentState) => {
-    const chapterContent: IChapterContent = {
-      key: rawContent.blocks[0].key,
-      type: rawContent.blocks[0].type,
-      text: rawContent.blocks[0].text
-    };
-
-    const chapter: IChapter = {
-      id: "1",
-      title: "Chapter title 1",
-      subtitle: "subChapter subtitle 1",
-      content: [chapterContent]
-    };
-    dispatch({ type: "chapters", chapters: [chapter] });
-  };
-
-  useEffect(() => {
-    console.table("chapters: ", chapters);
-  }, [chapters]);
 
   const handleKeyPress = (
     event: React.KeyboardEvent<HTMLInputElement>
@@ -228,7 +207,11 @@ const PostCreatePage: React.FC = () => {
             <div className="columns">
               <div className="column is-full">
                 <div className="column is-three-fifths is-offset-one-fifth">
-                  <InputEditor receiveContent={handleEditorContentChange} />
+                  <PostCreateChapter
+                    setChapter={(chapter: IChapter) =>
+                      dispatch({ type: "chapters", chapters: [chapter] })
+                    }
+                  />
                 </div>
               </div>
             </div>

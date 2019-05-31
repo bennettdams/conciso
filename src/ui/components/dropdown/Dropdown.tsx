@@ -9,7 +9,7 @@ interface DropdownProps {
   dispatchSelected: (value: string) => any;
 }
 
-const Dropdown = (props: DropdownProps) => {
+const Dropdown: React.FC<DropdownProps> = props => {
   const [doCollapse, setDoCollapse] = useState<boolean>(false);
   const dropDownRef = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState<string | null>(null);
