@@ -1,5 +1,5 @@
 export interface IChapter {
-  id: string;
+  id: number;
   title: string;
   subtitle: string;
   content: IChapterContent[];

@@ -24,7 +24,6 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
       .get()
       .then(doc => {
         if (doc.exists) {
-          // setPostDoc(doc);
           const data = doc.data();
           if (data) {
             const post: IPostType = {

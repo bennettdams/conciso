@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer } from "react";
 import {
   useFirestore,
   getServerTimestamp
@@ -18,7 +18,6 @@ interface IState {
   category: string;
   chapters: IChapter[];
   submitted: boolean;
-  chapterCount: number;
 }
 
 type ActionType =
@@ -27,17 +26,16 @@ type ActionType =
   | { type: "descriptionShort"; descriptionShort: string }
   | { type: "category"; category: string }
   | { type: "chapters"; chapters: IChapter[] }
-  | { type: "add_chapter"; chapter: IChapter }
-  | { type: "submitted"; submitted: boolean }
-  | { type: "chapterCount"; chapterCounter: number };
+  | { type: "add_chapter" }
+  | { type: "update_chapter"; chapter: IChapter }
+  | { type: "submitted"; submitted: boolean };
 
 const initialState: IState = {
   title: "",
   descriptionShort: "",
   category: "",
-  chapters: [],
-  submitted: false,
-  chapterCount: 1
+  chapters: [{ id: 1, title: "", subtitle: "", content: [] }],
+  submitted: false
 };
 
 const formReducer = (state: IState, action: ActionType) => {
@@ -51,18 +49,37 @@ const formReducer = (state: IState, action: ActionType) => {
     case "chapters":
       return { ...state, chapters: action.chapters };
     case "add_chapter":
-      return { ...state, chapter: action.chapter };
+      return {
+        ...state,
+        chapters: [
+          ...state.chapters,
+          {
+            id: state.chapters.length + 1,
+            title: "",
+            subtitle: "",
+            content: []
+          }
+        ]
+      };
+    case "update_chapter":
+      return {
+        ...state,
+        chapters: state.chapters.map(chapter => {
+          if (chapter.id === action.chapter.id) {
+            return action.chapter;
+          } else {
+            return chapter;
+          }
+        })
+      };
     case "submitted":
       return { ...state, submitted: action.submitted };
-    case "chapterCount":
-      return { ...state, chapterCount: action.chapterCounter };
     case "reset":
       return {
         ...state,
         title: "",
         descriptionShort: "",
-        category: "",
-        chapterCount: 1
+        category: ""
       };
     default:
       throw new Error();
@@ -193,7 +210,7 @@ const PostCreatePage: React.FC = () => {
                         <button type="submit" className="button is-primary">
                           Create Post
                         </button>
-                        <button className="button is-link">
+                        <button type="button" className="button is-link">
                           Save for later
                         </button>
                       </div>
@@ -204,18 +221,35 @@ const PostCreatePage: React.FC = () => {
               {/*  */}
             </div>
             {/*  */}
-            <div className="columns">
-              <div className="column is-full">
-                <div className="column is-three-fifths is-offset-one-fifth">
-                  <PostCreateChapter
-                    setChapter={(chapter: IChapter) =>
-                      dispatch({ type: "chapters", chapters: [chapter] })
-                    }
-                  />
-                </div>
-              </div>
+            <div className="columns is-multiline">
+              {chapters.map(chapter => {
+                return (
+                  <div
+                    key={chapter.id}
+                    className="column is-three-fifths is-offset-one-fifth"
+                  >
+                    <PostCreateChapter
+                      chapterID={chapter.id}
+                      updateChapter={(chapter: IChapter) =>
+                        dispatch({ type: "update_chapter", chapter })
+                      }
+                    />
+                  </div>
+                );
+              })}
             </div>
             {/*  */}
+            <div className="columns">
+              <div className="column is-three-fifths is-offset-one-fifth">
+                <button
+                  type="button"
+                  onClick={() => dispatch({ type: "add_chapter" })}
+                  className="button"
+                >
+                  ADD CHAPTER
+                </button>
+              </div>
+            </div>
           </form>
           <br />
           <br />
