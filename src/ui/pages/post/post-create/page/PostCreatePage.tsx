@@ -1,7 +1,8 @@
 import React, { useReducer } from "react";
 import {
   useFirestore,
-  getServerTimestamp
+  getServerTimestamp,
+  useFirebaseAuth
 } from "../../../../../data/context/firebase-context";
 import PageHeader from "../../../../components/page-header/PageHeader";
 import { POST_CATEGORIES } from "../../../../../constants/post/categories";
@@ -92,13 +93,18 @@ const PostCreatePage: React.FC = () => {
     dispatch
   ] = useReducer(formReducer, initialState);
   const firestore = useFirestore();
+  const { isSignedIn } = useFirebaseAuth();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    dispatch({ type: "submitted", submitted: true });
-    console.log("Submitted!");
-    createPost();
-    dispatch({ type: "reset" });
+    if (!isSignedIn) {
+      console.log("Please sign in!");
+    } else {
+      dispatch({ type: "submitted", submitted: true });
+      console.log("Submitted!");
+      createPost();
+      dispatch({ type: "reset" });
+    }
   };
 
   const handleKeyPress = (
@@ -140,6 +146,11 @@ const PostCreatePage: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <div className="columns is-multiline">
               {/*  */}
+              {!isSignedIn && (
+                <div className="column is-full">
+                  Please sign in to create a post!
+                </div>
+              )}
               <div className="column is-full">
                 <div className="field">
                   {/* <label className="label">Title</label> */}

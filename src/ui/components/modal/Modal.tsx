@@ -7,10 +7,16 @@ interface ModalProps {
   hide: () => void;
   title: string;
   buttonText: string;
+  mainButtonClick: () => void;
 }
 
-const Modal: React.FC<ModalProps> = props =>
-  props.isShowing
+const Modal: React.FC<ModalProps> = props => {
+  const mainButtonClick = () => {
+    props.mainButtonClick();
+    props.hide();
+  };
+
+  return props.isShowing
     ? ReactDOM.createPortal(
         <React.Fragment>
           <div
@@ -27,7 +33,7 @@ const Modal: React.FC<ModalProps> = props =>
               </header>
               <section className="modal-card-body">{props.children}</section>
               <footer className="modal-card-foot">
-                <button onClick={props.hide} className="button is-primary">
+                <button onClick={mainButtonClick} className="button is-primary">
                   {props.buttonText}
                 </button>
                 <button onClick={props.hide} className="button">
@@ -40,5 +46,6 @@ const Modal: React.FC<ModalProps> = props =>
         document.body
       )
     : null;
+};
 
 export default Modal;

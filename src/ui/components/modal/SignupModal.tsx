@@ -14,6 +14,7 @@ const SignupModal: React.FC<SignupModalProps> = props => {
         title="SIGN UP"
         buttonText="SIGN UP"
         hide={props.hide}
+        mainButtonClick={() => console.log("sign up")}
       >
         Sign up to <strong>conciso</strong>
       </Modal>

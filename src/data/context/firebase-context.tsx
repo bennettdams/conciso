@@ -16,6 +16,7 @@ const config = {
 
 type FirebaseContextValue = {
   firestore: firebase.firestore.Firestore;
+  auth: firebase.auth.Auth;
 };
 
 const FirebaseContext = createContext<FirebaseContextValue | undefined>(
@@ -43,27 +44,15 @@ const FirebaseProvider = (props: FirebaseProviderProps) => {
   );
 
   // auth
-  const [auth] = useState(firebaseImpl.auth());
+  const [auth] = useState<firebase.auth.Auth>(firebaseImpl.auth());
   auth.setPersistence(firebase.auth.Auth.Persistence.NONE);
-
-  const email = process.env.REACT_APP_FIREBASE_USER as string;
-  const password: string = process.env.REACT_APP_FIREBASE_PASSWORD as string;
-
-  auth
-    .signInWithEmailAndPassword(email, password)
-    .then(signin => {
-      console.log("Signed in with ", email);
-      console.log("Sign in object: ", signin);
-    })
-    .catch(error => {
-      console.log("Error when signing in: ", error);
-    });
 
   const value = useMemo(() => {
     return {
-      firestore
+      firestore,
+      auth
     };
-  }, [firestore]);
+  }, [firestore, auth]);
   return <FirebaseContext.Provider value={value} {...props} />;
 };
 
@@ -79,4 +68,29 @@ const useFirestore = (): firebase.firestore.Firestore => {
   return context.firestore;
 };
 
-export { FirebaseProvider, useFirestore, getServerTimestamp };
+const useFirebaseAuth = () => {
+  const context = useContext(FirebaseContext);
+  if (!context) {
+    throw new Error("useFirebaseAuth must be used within a FirebaseProvider");
+  }
+
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+
+  const signInWithEmail = (email: string, password: string): void => {
+    context.auth
+      .signInWithEmailAndPassword(email, password)
+      .then(signin => {
+        setIsSignedIn(true);
+        console.log("Signed in with ", email);
+        console.log("Sign in object: ", signin);
+      })
+      .catch(error => {
+        setIsSignedIn(false);
+        console.log("Error when signing in: ", error);
+      });
+  };
+
+  return { isSignedIn, signInWithEmail };
+};
+
+export { FirebaseProvider, useFirestore, useFirebaseAuth, getServerTimestamp };
