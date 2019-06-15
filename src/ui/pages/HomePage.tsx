@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useFirestore } from "../../data/context/firebase-context";
 import PostType from "../../types/IPostType";
+import { firestore } from "../../data/firebase";
 
 const HomePage: React.FC = () => {
-  const firestore = useFirestore();
   const [amountPosts, setAmountPosts] = useState<PostType[]>([]);
 
   useEffect(() => {
@@ -17,7 +16,7 @@ const HomePage: React.FC = () => {
       .catch(err => {
         console.log("Error getting documents", err);
       });
-  }, [firestore]);
+  }, []);
   return (
     <div className="home-page container fade-in">
       <section className="section">

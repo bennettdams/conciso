@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import PageHeader from "../../../components/page-header/PageHeader";
 import { RouteComponentProps } from "react-router-dom";
-import { useFirestore } from "../../../../data/context/firebase-context";
 import { timestampToDateString } from "../../../../util/timestampToDateString";
 import Chapter from "../../../components/chapter/Chapter";
 import { IChapter } from "../../../../types/IChapter";
 import IPostType from "../../../../types/IPostType";
+import { firestore } from "../../../../data/firebase";
 
 type TParams = { id: string };
 
 const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
   const postId: string = match.params.id;
-  const firestore = useFirestore();
   const [post, setPost] = useState<IPostType>();
   // const [postDoc, setPostDoc] = useState<firebase.firestore.DocumentSnapshot>();
 
@@ -44,7 +43,7 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
       .catch(error => {
         throw new Error(error);
       });
-  }, [firestore, postId]);
+  }, [postId]);
 
   return (
     <div className="post-view-page fade-in">

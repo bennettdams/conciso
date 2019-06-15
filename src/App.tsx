@@ -6,9 +6,6 @@ import "./App.scss";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ROUTES from "./constants/routes";
 
-// DATA
-import { FirebaseProvider } from "./data/context/firebase-context";
-
 // COMPONENTS
 import "./ui/styles/global.scss";
 import HomePage from "./ui/pages/HomePage";
@@ -25,21 +22,19 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Router>
-        <FirebaseProvider>
-          <div className="conciso-app">
-            <Navbar />
-            <div className="conciso-app-content">
-              <Route exact path={ROUTES.HOME} component={HomePage} />
-              <Route path={ROUTES.POSTS} component={PostsPage} />
-              <Route path={ROUTES.POST_CREATE} component={PostCreatePage} />
-              <Route path={ROUTES.ABOUT} component={AboutPage} />
-              <Route path={ROUTES.CONTACT} component={ContactPage} />
-              <Route path={ROUTES.PROFILE} component={ProfilePage} />
-              <Route path={ROUTES.POST_VIEW} component={PostViewPage} />
-            </div>
-            <Footer />
+        <div className="conciso-app">
+          <Navbar />
+          <div className="conciso-app-content">
+            <Route exact path={ROUTES.HOME} component={HomePage} />
+            <Route path={ROUTES.POSTS} component={PostsPage} />
+            <Route path={ROUTES.POST_CREATE} component={PostCreatePage} />
+            <Route path={ROUTES.ABOUT} component={AboutPage} />
+            <Route path={ROUTES.CONTACT} component={ContactPage} />
+            <Route path={ROUTES.PROFILE} component={ProfilePage} />
+            <Route path={ROUTES.POST_VIEW} component={PostViewPage} />
           </div>
-        </FirebaseProvider>
+          <Footer />
+        </div>
       </Router>
     </div>
   );
