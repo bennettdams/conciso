@@ -1,9 +1,4 @@
 import React, { useReducer } from "react";
-import {
-  useFirestore,
-  getServerTimestamp,
-  useFirebaseAuth
-} from "../../../../../data/context/firebase-context";
 import PageHeader from "../../../../components/page-header/PageHeader";
 import { POST_CATEGORIES } from "../../../../../constants/post/categories";
 import IPostType from "../../../../../types/IPostType";
@@ -12,6 +7,11 @@ import { IChapter } from "../../../../../types/IChapter";
 import "./PostCreatePage.scss";
 
 import PostCreateChapter from "../chapter/PostCreateChapter";
+import {
+  getFirebaseServerTimestamp,
+  firestore,
+  isSignedIn
+} from "../../../../../data/firebase";
 
 interface IState {
   title: string;
@@ -92,8 +92,6 @@ const PostCreatePage: React.FC = () => {
     { title, descriptionShort, category, chapters, submitted },
     dispatch
   ] = useReducer(formReducer, initialState);
-  const firestore = useFirestore();
-  const { isSignedIn } = useFirebaseAuth();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -121,7 +119,7 @@ const PostCreatePage: React.FC = () => {
       id: "",
       title,
       descriptionShort,
-      timestamp: getServerTimestamp() as firebase.firestore.Timestamp,
+      timestamp: getFirebaseServerTimestamp() as firebase.firestore.Timestamp,
       category,
       chapters
     };

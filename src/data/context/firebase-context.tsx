@@ -93,4 +93,4 @@ const useFirebaseAuth = () => {
   return { isSignedIn, signInWithEmail };
 };
 
-export { FirebaseProvider, useFirestore, useFirebaseAuth, getServerTimestamp };
+// export { FirebaseProvider, useFirestore, useFirebaseAuth, getServerTimestamp };

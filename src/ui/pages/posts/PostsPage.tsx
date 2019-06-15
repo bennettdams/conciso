@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useFirestore } from "../../../data/context/firebase-context";
 import PostType from "../../../types/IPostType";
 import PageHeader from "../../components/page-header/PageHeader";
 import { timestampToDateString } from "../../../util/timestampToDateString";
 import { Link } from "react-router-dom";
 import "./PostsPage.scss";
 import IPostType from "../../../types/IPostType";
+import { firestore } from "../../../data/firebase";
 
 const PostsPage: React.FC = () => {
-  const firestore = useFirestore();
   const [posts, setPosts] = useState<PostType[]>([]);
 
   useEffect(() => {
@@ -35,7 +34,7 @@ const PostsPage: React.FC = () => {
       .catch(err => {
         console.log("Error getting documents", err);
       });
-  }, [firestore]);
+  }, []);
 
   return (
     <div className="posts-page container fade-in">

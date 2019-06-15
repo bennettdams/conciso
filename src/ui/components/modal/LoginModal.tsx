@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "./Modal";
-import { useFirebaseAuth } from "../../../data/context/firebase-context";
+import { signInWithEmailAndPassword } from "../../../data/firebase";
 
 interface LoginModalProps {
   isShowing: boolean;
@@ -8,7 +8,6 @@ interface LoginModalProps {
 }
 
 const LoginModal: React.FC<LoginModalProps> = props => {
-  const { signInWithEmail } = useFirebaseAuth();
   const [inputEmail, setInputEmail] = useState<string>("");
   const [inputPassword, setInputPassword] = useState<string>("");
 
@@ -19,7 +18,9 @@ const LoginModal: React.FC<LoginModalProps> = props => {
         title="LOGIN"
         buttonText="LOG IN"
         hide={props.hide}
-        mainButtonClick={() => signInWithEmail(inputEmail, inputPassword)}
+        mainButtonClick={() =>
+          signInWithEmailAndPassword(inputEmail, inputPassword)
+        }
       >
         <input
           name="inputEmail"
