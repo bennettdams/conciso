@@ -17,11 +17,11 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
   // GET POST FROM ROUTER PARAM
   useEffect(() => {
     console.log("get post");
-    firestore
+
+    const unsubscribe = firestore
       .collection("posts")
       .doc(postId)
-      .get()
-      .then(doc => {
+      .onSnapshot(doc => {
         if (doc.exists) {
           const data = doc.data();
           if (data) {
@@ -39,10 +39,11 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
         } else {
           console.log("No such document!");
         }
-      })
-      .catch(error => {
-        throw new Error(error);
       });
+
+    return () => {
+      unsubscribe();
+    };
   }, [postId]);
 
   return (

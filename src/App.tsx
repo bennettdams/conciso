@@ -8,14 +8,14 @@ import ROUTES from "./constants/routes";
 
 // COMPONENTS
 import "./ui/styles/global.scss";
-import HomePage from "./ui/pages/HomePage";
-import ContactPage from "./ui/pages/ContactPage";
+import HomePage from "./ui/pages/home/HomePage";
+import ContactPage from "./ui/pages/contact/ContactPage";
 import PostsPage from "./ui/pages/posts/PostsPage";
 import PostCreatePage from "./ui/pages/post/post-create/page/PostCreatePage";
-import AboutPage from "./ui/pages/AboutPage";
+import AboutPage from "./ui/pages/about/AboutPage";
 import Navbar from "./ui/components/navbar/Navbar";
 import Footer from "./ui/components/footer/Footer";
-import ProfilePage from "./ui/pages/ProfilePage";
+import ProfilePage from "./ui/pages/profile/ProfilePage";
 import PostViewPage from "./ui/pages/post/post-view/PostViewPage";
 
 const App: React.FC = () => {

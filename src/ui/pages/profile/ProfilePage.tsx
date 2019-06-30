@@ -1,5 +1,5 @@
 import React from "react";
-import PageHeader from "../components/page-header/PageHeader";
+import PageHeader from "../../components/page-header/PageHeader";
 
 const ProfilePage: React.FC = () => {
   return (

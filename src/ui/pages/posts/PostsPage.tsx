@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PostType from "../../../types/IPostType";
 import PageHeader from "../../components/page-header/PageHeader";
 import { timestampToDateString } from "../../../util/timestampToDateString";
 import { Link } from "react-router-dom";
@@ -8,32 +7,28 @@ import IPostType from "../../../types/IPostType";
 import { firestore } from "../../../data/firebase";
 
 const PostsPage: React.FC = () => {
-  const [posts, setPosts] = useState<PostType[]>([]);
+  const [posts, setPosts] = useState<IPostType[]>([]);
 
+  // FETCH POSTS
   useEffect(() => {
-    firestore
-      .collection("posts")
-      .get()
-      .then(snapshot => {
-        // @ts-ignore
-        setPosts(
-          snapshot.docs.map(doc => {
-            const data = doc.data();
-            const post: IPostType = {
-              id: doc.id,
-              title: data.title,
-              descriptionShort: data.descriptionShort,
-              category: data.category,
-              chapters: data.chapters,
-              timestamp: data.timestamp
-            };
-            return post;
-          })
-        );
-      })
-      .catch(err => {
-        console.log("Error getting documents", err);
+    const unsubscribe = firestore.collection("posts").onSnapshot(snapshot => {
+      const postsFetch: IPostType[] = snapshot.docs.map(doc => {
+        const postFetch: IPostType = {
+          id: doc.id,
+          title: doc.data().title,
+          descriptionShort: doc.data().descriptionShort,
+          category: doc.data().category,
+          chapters: doc.data().chapters,
+          timestamp: doc.data().timestamp
+        };
+        return postFetch;
       });
+      setPosts(postsFetch);
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return (
@@ -41,7 +36,7 @@ const PostsPage: React.FC = () => {
       <PageHeader title="POSTS" />
       <section className="posts">
         <div className="columns is-multiline">
-          {posts.map((post: PostType) => {
+          {posts.map((post: IPostType) => {
             return (
               <div
                 key={post.id}
