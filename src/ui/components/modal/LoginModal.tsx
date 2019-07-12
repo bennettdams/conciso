@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-import { signInWithEmailAndPassword } from "../../../data/firebase";
+import { signInWithEmailAndPassword } from "../../../services/firebase";
 
 interface LoginModalProps {
   isShowing: boolean;

@@ -11,7 +11,7 @@ import {
   getFirebaseServerTimestamp,
   firestore,
   isSignedIn
-} from "../../../../../data/firebase";
+} from "../../../../../services/firebase";
 
 interface IState {
   title: string;

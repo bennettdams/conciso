@@ -32,10 +32,12 @@ const signInWithEmailAndPassword = (email: string, password: string) => {
 };
 
 const isSignedIn = () => {
-  return new Promise((resolve, reject) => {
-    firebase.auth().onAuthStateChanged(user => {
-      resolve(!!user);
-    });
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      return true;
+    } else {
+      return false;
+    }
   });
 };
 

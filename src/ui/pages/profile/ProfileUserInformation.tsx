@@ -1,9 +1,10 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useEffect } from "react";
 import {
   useProfileState,
   useProfileDispatch
 } from "../../../data/context/profile-context";
 import FormInput from "../../components/form-elements/FormInput";
+import { isSignedIn } from "../../../services/firebase";
 
 interface ProfileUserInformationProps {
   edit: boolean;
@@ -12,6 +13,10 @@ interface ProfileUserInformationProps {
 const ProfileUserInformation: React.FC<ProfileUserInformationProps> = props => {
   const { username, name } = useProfileState();
   const dispatch = useProfileDispatch();
+
+  useEffect(() => {
+    console.log(isSignedIn());
+  }, []);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

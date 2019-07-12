@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { firestore } from "../../../data/firebase";
+import { firestore } from "../../../services/firebase";
 
 const HomePage: React.FC = () => {
   const [amountPosts, setAmountPosts] = useState<number>(0);

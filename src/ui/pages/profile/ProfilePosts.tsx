@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import IPost from "../../../types/IPost";
 import { Link } from "react-router-dom";
 import { timestampToDateString } from "../../../util/timestampToDateString";
