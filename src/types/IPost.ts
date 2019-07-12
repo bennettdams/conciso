@@ -1,6 +1,6 @@
 import { IChapter } from "./IChapter";
 
-export default interface IPostType {
+export default interface IPost {
   id: string;
   title: string;
   descriptionShort: string;

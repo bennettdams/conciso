@@ -4,14 +4,14 @@ import { RouteComponentProps } from "react-router-dom";
 import { timestampToDateString } from "../../../../util/timestampToDateString";
 import Chapter from "../../../components/chapter/Chapter";
 import { IChapter } from "../../../../types/IChapter";
-import IPostType from "../../../../types/IPostType";
+import IPost from "../../../../types/IPost";
 import { firestore } from "../../../../data/firebase";
 
 type TParams = { id: string };
 
 const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
   const postId: string = match.params.id;
-  const [post, setPost] = useState<IPostType>();
+  const [post, setPost] = useState<IPost>();
   // const [postDoc, setPostDoc] = useState<firebase.firestore.DocumentSnapshot>();
 
   // GET POST FROM ROUTER PARAM
@@ -25,7 +25,7 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
         if (doc.exists) {
           const data = doc.data();
           if (data) {
-            const post: IPostType = {
+            const post: IPost = {
               id: doc.id,
               title: data.title,
               descriptionShort: data.descriptionShort,

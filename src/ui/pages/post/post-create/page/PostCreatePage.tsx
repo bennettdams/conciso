@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import PageHeader from "../../../../components/page-header/PageHeader";
 import { POST_CATEGORIES } from "../../../../../constants/post/categories";
-import IPostType from "../../../../../types/IPostType";
+import IPost from "../../../../../types/IPost";
 import Dropdown from "../../../../components/dropdown/Dropdown";
 import { IChapter } from "../../../../../types/IChapter";
 import "./PostCreatePage.scss";
@@ -115,7 +115,7 @@ const PostCreatePage: React.FC = () => {
   };
 
   const createPost = (): void => {
-    const post: IPostType = {
+    const post: IPost = {
       id: "",
       title,
       descriptionShort,

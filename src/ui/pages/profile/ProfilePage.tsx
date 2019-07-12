@@ -1,8 +1,10 @@
 import React, { useState, FormEvent } from "react";
 import PageHeader from "../../components/page-header/PageHeader";
+import { useProfileState } from "../../../data/context/profile-context";
 
 const ProfilePage: React.FC = () => {
   const [inputUsername, setInputUsername] = useState<string>("");
+  const { username } = useProfileState();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -13,6 +15,7 @@ const ProfilePage: React.FC = () => {
     <div className="profile-page container fade-in">
       <PageHeader title="PROFILE" />
       <section className="posts">
+        {username}
         <div className="columns is-multiline">
           <form onSubmit={handleSubmit}>
             <label>

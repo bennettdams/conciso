@@ -3,17 +3,17 @@ import PageHeader from "../../components/page-header/PageHeader";
 import { timestampToDateString } from "../../../util/timestampToDateString";
 import { Link } from "react-router-dom";
 import "./PostsPage.scss";
-import IPostType from "../../../types/IPostType";
+import IPost from "../../../types/IPost";
 import { firestore } from "../../../data/firebase";
 
 const PostsPage: React.FC = () => {
-  const [posts, setPosts] = useState<IPostType[]>([]);
+  const [posts, setPosts] = useState<IPost[]>([]);
 
   // FETCH POSTS
   useEffect(() => {
     const unsubscribe = firestore.collection("posts").onSnapshot(snapshot => {
-      const postsFetch: IPostType[] = snapshot.docs.map(doc => {
-        const postFetch: IPostType = {
+      const postsFetch: IPost[] = snapshot.docs.map(doc => {
+        const postFetch: IPost = {
           id: doc.id,
           title: doc.data().title,
           descriptionShort: doc.data().descriptionShort,
@@ -36,7 +36,7 @@ const PostsPage: React.FC = () => {
       <PageHeader title="POSTS" />
       <section className="posts">
         <div className="columns is-multiline">
-          {posts.map((post: IPostType) => {
+          {posts.map((post: IPost) => {
             return (
               <div
                 key={post.id}
