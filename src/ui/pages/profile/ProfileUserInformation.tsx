@@ -4,19 +4,29 @@ import {
   useProfileDispatch
 } from "../../../data/context/profile-context";
 import FormInput from "../../components/form-elements/FormInput";
-import { isSignedIn } from "../../../services/firebase";
+import useFirebase from "../../../services/firebase/useFirebase";
+import { auth } from "../../../services/firebase/firebase-service";
 
 interface ProfileUserInformationProps {
   edit: boolean;
 }
 
 const ProfileUserInformation: React.FC<ProfileUserInformationProps> = props => {
+  const { isSignedIn } = useFirebase();
   const { username, name } = useProfileState();
   const dispatch = useProfileDispatch();
 
   useEffect(() => {
     console.log(isSignedIn());
-  }, []);
+    auth.onAuthStateChanged(function(user) {
+      if (user) {
+        console.log("log");
+        console.log(user);
+      } else {
+        console.log("not");
+      }
+    });
+  }, [isSignedIn]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -49,7 +59,7 @@ const ProfileUserInformation: React.FC<ProfileUserInformationProps> = props => {
           <input type="submit" value="Submit" />
         </form>
       ) : (
-        <div>asd</div>
+        <div>{auth.currentUser}</div>
       )}
     </div>
   );

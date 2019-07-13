@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-import { signInWithEmailAndPassword } from "../../../services/firebase";
+import useFirebase from "../../../services/firebase/useFirebase";
 
 interface LoginModalProps {
   isShowing: boolean;
@@ -8,6 +8,7 @@ interface LoginModalProps {
 }
 
 const LoginModal: React.FC<LoginModalProps> = props => {
+  const { signInWithEmailAndPassword } = useFirebase();
   const [inputEmail, setInputEmail] = useState<string>("");
   const [inputPassword, setInputPassword] = useState<string>("");
 

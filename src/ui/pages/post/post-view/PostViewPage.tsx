@@ -5,7 +5,7 @@ import { timestampToDateString } from "../../../../util/timestampToDateString";
 import Chapter from "../../../components/chapter/Chapter";
 import { IChapter } from "../../../../types/IChapter";
 import IPost from "../../../../types/IPost";
-import { firestore } from "../../../../services/firebase";
+import { firestore } from "../../../../services/firebase/firebase-service";
 
 type TParams = { id: string };
 

@@ -4,7 +4,7 @@ import { timestampToDateString } from "../../../util/timestampToDateString";
 import { Link } from "react-router-dom";
 import "./PostsPage.scss";
 import IPost from "../../../types/IPost";
-import { firestore } from "../../../services/firebase";
+import { firestore } from "../../../services/firebase/firebase-service";
 
 const PostsPage: React.FC = () => {
   const [posts, setPosts] = useState<IPost[]>([]);

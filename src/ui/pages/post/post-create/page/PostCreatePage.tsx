@@ -7,11 +7,8 @@ import { IChapter } from "../../../../../types/IChapter";
 import "./PostCreatePage.scss";
 
 import PostCreateChapter from "../chapter/PostCreateChapter";
-import {
-  getFirebaseServerTimestamp,
-  firestore,
-  isSignedIn
-} from "../../../../../services/firebase";
+import useFirebase from "../../../../../services/firebase/useFirebase";
+import { firestore } from "../../../../../services/firebase/firebase-service";
 
 interface IState {
   title: string;
@@ -88,6 +85,7 @@ const formReducer = (state: IState, action: ActionType) => {
 };
 
 const PostCreatePage: React.FC = () => {
+  const { isSignedIn, getFirebaseServerTimestamp } = useFirebase();
   const [
     { title, descriptionShort, category, chapters, submitted },
     dispatch
