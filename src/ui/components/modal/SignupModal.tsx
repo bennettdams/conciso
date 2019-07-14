@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import useFirebase from "../../../services/firebase/useFirebase";
-import { auth } from "firebase";
 
 interface SignupModalProps {
   isShowing: boolean;

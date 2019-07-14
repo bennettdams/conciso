@@ -21,7 +21,7 @@ const useFirebase = () => {
     return () => {
       unsubscribe();
     };
-  }, [auth]);
+  }, []);
 
   const getFirebaseServerTimestamp = () =>
     // @ts-ignore

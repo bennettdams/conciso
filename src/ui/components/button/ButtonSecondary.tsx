@@ -11,9 +11,11 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = props => {
 
   return (
     <button onClick={handleClick} className="button">
-      <span className="has-text-weight-light is-uppercase">
-        {props.children}
-      </span>
+      {props.children && (
+        <span className="has-text-weight-light is-uppercase">
+          {props.children}
+        </span>
+      )}
     </button>
   );
 };
