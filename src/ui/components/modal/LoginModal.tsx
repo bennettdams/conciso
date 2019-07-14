@@ -12,6 +12,10 @@ const LoginModal: React.FC<LoginModalProps> = props => {
   const [inputEmail, setInputEmail] = useState<string>("");
   const [inputPassword, setInputPassword] = useState<string>("");
 
+  const handleLoginClick = (): void => {
+    signInWithEmailAndPassword(inputEmail, inputPassword);
+  };
+
   return (
     <div className="login-modal">
       {props.isShowing && (
@@ -19,9 +23,7 @@ const LoginModal: React.FC<LoginModalProps> = props => {
           title="LOGIN"
           buttonText="LOG IN"
           hide={props.hide}
-          mainButtonClick={() =>
-            signInWithEmailAndPassword(inputEmail, inputPassword)
-          }
+          mainButtonClick={handleLoginClick}
         >
           <input
             name="inputEmail"

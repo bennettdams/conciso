@@ -1,32 +1,68 @@
-import { firebase, auth } from "./firebase-service";
+import { auth, firestore } from "./firebase-service";
+import "firebase/firestore";
+import { useState, useEffect } from "react";
 
 const useFirebase = () => {
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [user, setUser] = useState<firebase.User | null>(null);
+
+  // SIGNED IN
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(userFirebase => {
+      if (userFirebase) {
+        setUser(userFirebase);
+        setIsSignedIn(true);
+        console.log(userFirebase);
+      } else {
+        setUser(null);
+        setIsSignedIn(false);
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [auth]);
+
   const getFirebaseServerTimestamp = () =>
-    firebase.firestore.FieldValue.serverTimestamp();
+    // @ts-ignore
+    firestore.FieldValue.serverTimestamp();
 
   const signInWithEmailAndPassword = (email: string, password: string) => {
     auth
       .signInWithEmailAndPassword(email, password)
-      .then(signin => {
+      .then(credentials => {
         console.log("Signed in with ", email);
-        console.log("Sign in object: ", signin);
+        console.log("Sign in credentials: ", credentials);
       })
       .catch(error => {
         console.log("Error when signing in: ", error);
       });
   };
 
-  const isSignedIn = () => {
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        return true;
-      } else {
-        return false;
-      }
+  const createUser = (email: string, password: string): void => {
+    auth.createUserWithEmailAndPassword(email, password).catch(error => {
+      console.log("Error while signup:" + error);
     });
   };
 
-  return { getFirebaseServerTimestamp, signInWithEmailAndPassword, isSignedIn };
+  const signOut = async () => {
+    try {
+      await auth.signOut();
+      console.log("signed out");
+    } catch (e) {
+      console.log("error while signing out: " + e);
+    }
+  };
+
+  return {
+    getFirebaseServerTimestamp,
+    signInWithEmailAndPassword,
+
+    isSignedIn,
+    signOut,
+    createUser,
+    user
+  };
 };
 
 export default useFirebase;

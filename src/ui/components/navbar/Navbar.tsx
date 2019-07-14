@@ -6,8 +6,12 @@ import ROUTES from "../../../constants/routes";
 import useModal from "../../hooks/useModal";
 import LoginModal from "../modal/LoginModal";
 import SignupModal from "../modal/SignupModal";
+import useFirebase from "../../../services/firebase/useFirebase";
+import Button from "../button/Button";
+import ButtonSecondary from "../button/ButtonSecondary";
 
 const Navbar: React.FC = () => {
+  const { isSignedIn, signOut } = useFirebase();
   const { isShowing: isShowingLogin, toggle: toggleLogin } = useModal();
   const { isShowing: isShowingSignup, toggle: toggleSignup } = useModal();
   const [isBurgerOpen, setIsBurgerOpen] = useState<boolean>(false);
@@ -18,6 +22,10 @@ const Navbar: React.FC = () => {
 
   const handleNavMenuClick = (): void => {
     setIsBurgerOpen(false);
+  };
+
+  const handleLogout = (): void => {
+    signOut();
   };
 
   return (
@@ -66,23 +74,24 @@ const Navbar: React.FC = () => {
           <Link className="navbar-item" to={ROUTES.POSTS}>
             Posts
           </Link>
-
-          <Link className="navbar-item" to={ROUTES.POST_CREATE}>
-            <button className="button is-primary ripple">
-              <strong>Create Post</strong>
-            </button>
-          </Link>
+          {isSignedIn ? (
+            <Link className="navbar-item" to={ROUTES.POST_CREATE}>
+              <Button>Create Post</Button>
+            </Link>
+          ) : (
+            <Link className="navbar-item" to={ROUTES.ABOUT}>
+              About
+            </Link>
+          )}
         </div>
 
         <div className="navbar-end">
           <Link className="navbar-item" to={ROUTES.CONTACT}>
             Contact
           </Link>
-
           <Link className="navbar-item" to={ROUTES.ABOUT}>
             About
           </Link>
-
           <div className="navbar-item has-dropdown is-hoverable">
             <div className="navbar-link">More</div>
 
@@ -109,30 +118,26 @@ const Navbar: React.FC = () => {
               </a>
             </div>
           </div>
-
-          <Link className="navbar-item" to={ROUTES.PROFILE}>
-            Profile
-          </Link>
-
           {/* SIGNUP AND LOGIN */}
-          <div className="navbar-item">
-            <div className="buttons">
-              <button
-                onClick={toggleSignup}
-                className="button is-primary ripple"
-              >
-                <span className="has-text-weight-light is-uppercase">
-                  Sign up
-                </span>
-              </button>
-              <button onClick={toggleLogin} className="button">
-                <span className="has-text-weight-light is-uppercase">
-                  Log in
-                </span>
-              </button>
-            </div>
+          <div className="user-management">
+            {isSignedIn ? (
+              <div className="navbar-item">
+                <Link className="navbar-item" to={ROUTES.PROFILE}>
+                  Profile
+                </Link>
+                <Button callback={handleLogout}>Logout</Button>
+              </div>
+            ) : (
+              <div className="navbar-item">
+                <div className="buttons">
+                  <Button callback={toggleSignup}>Signup</Button>
+                  <ButtonSecondary callback={toggleLogin}>
+                    Log in
+                  </ButtonSecondary>
+                </div>
+              </div>
+            )}
           </div>
-
           <LoginModal isShowing={isShowingLogin} hide={toggleLogin}>
             Content of Login Modal
           </LoginModal>

@@ -1,32 +1,19 @@
-import React, { FormEvent, useEffect } from "react";
+import React, { FormEvent } from "react";
 import {
   useProfileState,
   useProfileDispatch
 } from "../../../data/context/profile-context";
 import FormInput from "../../components/form-elements/FormInput";
 import useFirebase from "../../../services/firebase/useFirebase";
-import { auth } from "../../../services/firebase/firebase-service";
 
 interface ProfileUserInformationProps {
   edit: boolean;
 }
 
 const ProfileUserInformation: React.FC<ProfileUserInformationProps> = props => {
-  const { isSignedIn } = useFirebase();
+  const { user } = useFirebase();
   const { username, name } = useProfileState();
   const dispatch = useProfileDispatch();
-
-  useEffect(() => {
-    console.log(isSignedIn());
-    auth.onAuthStateChanged(function(user) {
-      if (user) {
-        console.log("log");
-        console.log(user);
-      } else {
-        console.log("not");
-      }
-    });
-  }, [isSignedIn]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,7 +22,7 @@ const ProfileUserInformation: React.FC<ProfileUserInformationProps> = props => {
 
   return (
     <div className="profile-user-information columns is-multiline">
-      {props.edit ? (
+      {user && props.edit ? (
         <form onSubmit={handleSubmit}>
           <div className="column">
             <FormInput
@@ -59,7 +46,30 @@ const ProfileUserInformation: React.FC<ProfileUserInformationProps> = props => {
           <input type="submit" value="Submit" />
         </form>
       ) : (
-        <div>{auth.currentUser}</div>
+        user && (
+          <ul>
+            <li>
+              <span>Name:</span>
+              <span>{user.displayName}</span>
+            </li>
+            <li>
+              <span>Email:</span>
+              <span>{user.email}</span>
+            </li>
+            <li>
+              <span>Verified:</span>
+              <span>{user.emailVerified}</span>
+            </li>
+            <li>
+              <span>Created:</span>
+              <span>{user.metadata.creationTime}</span>
+            </li>
+            <li>
+              <span>Last signin:</span>
+              <span>{user.metadata.lastSignInTime}</span>
+            </li>
+          </ul>
+        )
       )}
     </div>
   );
