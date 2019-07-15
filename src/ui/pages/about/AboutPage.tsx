@@ -1,12 +1,8 @@
 import React from "react";
-import PageHeader from "../../components/page-header/PageHeader";
+import Page from "../../components/layout/Page";
 
 const AboutPage: React.FC = () => {
-  return (
-    <div className="about-page container fade-in">
-      <PageHeader title="ABOUT" />
-    </div>
-  );
+  return <Page name="about-page" title="ABOUT" />;
 };
 
 export default AboutPage;

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./PageHeader.scss";
+import Section from "../layout/Section";
 
 type PageHeaderProps = {
   title: string;
@@ -17,7 +18,7 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
 
   return (
     <div className="page-header">
-      <section className="section">
+      <Section>
         <div
           onMouseEnter={onMouseEnterHandler}
           onMouseLeave={onMouseLeaveHandler}
@@ -28,9 +29,9 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
           <h1 className="title page-header-title is-size-1 has-text-primary">
             {props.title}
           </h1>
-          {props.title && <hr />}
+          <hr />
         </div>
-      </section>
+      </Section>
     </div>
   );
 };

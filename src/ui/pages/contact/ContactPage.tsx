@@ -1,14 +1,8 @@
 import React from "react";
-
-// COMPONENTS
-import PageHeader from "../../components/page-header/PageHeader";
+import Page from "../../components/layout/Page";
 
 const ContactPage: React.FC = () => {
-  return (
-    <div className="contact-page container fade-in">
-      <PageHeader title="CONTACT" />
-    </div>
-  );
+  return <Page name="contact-page" title="CONTACT" />;
 };
 
 export default ContactPage;

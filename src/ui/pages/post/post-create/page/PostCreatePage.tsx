@@ -1,5 +1,4 @@
 import React, { useReducer } from "react";
-import PageHeader from "../../../../components/page-header/PageHeader";
 import { POST_CATEGORIES } from "../../../../../constants/post/categories";
 import IPost from "../../../../../types/IPost";
 import Dropdown from "../../../../components/dropdown/Dropdown";
@@ -9,6 +8,8 @@ import "./PostCreatePage.scss";
 import PostCreateChapter from "../chapter/PostCreateChapter";
 import useFirebase from "../../../../../services/firebase/useFirebase";
 import { firestore } from "../../../../../services/firebase/firebase-service";
+import Page from "../../../../components/layout/Page";
+import Section from "../../../../components/layout/Section";
 
 interface IState {
   title: string;
@@ -134,131 +135,125 @@ const PostCreatePage: React.FC = () => {
     dispatch({ type: "category", category: categorySelected });
 
   return (
-    <div className="post-create-page container fade-in">
-      <PageHeader title="CREATE POST" />
-
-      <section className="section">
-        <div className="container">
-          <form onSubmit={handleSubmit}>
-            <section className="section">
-              <div className="columns is-multiline is-centered">
-                {/*  */}
-                {!isSignedIn && (
-                  <div className="column is-full">
-                    Please sign in to create a post!
-                  </div>
-                )}
-                <div className="column is-full">
-                  <div className="field">
-                    {/* <label className="label">Title</label> */}
-                    <div className="control">
-                      <input
-                        name="inputTitle"
-                        autoComplete="off"
-                        className="input title-input is-size-2"
-                        type="text"
-                        placeholder="Enter a title.."
-                        value={title}
-                        onChange={e =>
-                          dispatch({ type: "title", title: e.target.value })
-                        }
-                        onKeyDown={handleKeyPress}
-                      />
-                    </div>
-                  </div>
-                </div>
-                {/*  */}
-                <div className="column is-three-fifths">
-                  <div className="field">
-                    {/* <label className="label">Short description</label> */}
-                    <div className="control">
-                      <input
-                        name="inputDescriptionShort"
-                        autoComplete="off"
-                        className="input description-short-input is-size-4"
-                        type="text"
-                        placeholder="Describe your post.."
-                        value={descriptionShort}
-                        onChange={e =>
-                          dispatch({
-                            type: "descriptionShort",
-                            descriptionShort: e.target.value
-                          })
-                        }
-                      />
-                    </div>
-                  </div>
+    <Page name="post-create-page" title="CREATE POST">
+      <form onSubmit={handleSubmit}>
+        <Section>
+          <div className="columns is-multiline is-centered">
+            {!isSignedIn && (
+              <div className="column is-full">
+                Please sign in to create a post!
+              </div>
+            )}
+            <div className="column is-full">
+              <div className="field">
+                {/* <label className="label">Title</label> */}
+                <div className="control">
+                  <input
+                    name="inputTitle"
+                    autoComplete="off"
+                    className="input title-input is-size-2"
+                    type="text"
+                    placeholder="Enter a title.."
+                    value={title}
+                    onChange={e =>
+                      dispatch({ type: "title", title: e.target.value })
+                    }
+                    onKeyDown={handleKeyPress}
+                  />
                 </div>
               </div>
-            </section>
-            <section className="section">
-              <div className="columns is-centered">
-                <div className="column is-three-quarter">
-                  <p className="subtitle is-5">CATEGORY</p>
-                  <div className="field">
-                    <div className="control">
-                      <Dropdown
-                        dispatchSelected={handleSelectedCategory}
-                        dropdownItems={POST_CATEGORIES.map(category => {
-                          return { id: category.id, text: category.name };
-                        })}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="column is-one-quarter">
-                  <div className="buttons">
-                    <button type="submit" className="button is-primary">
-                      Create Post
-                    </button>
-                    <button type="button" className="button is-link">
-                      Save for later
-                    </button>
-                  </div>
+            </div>
+            <div className="column is-three-fifths">
+              <div className="field">
+                {/* <label className="label">Short description</label> */}
+                <div className="control">
+                  <input
+                    name="inputDescriptionShort"
+                    autoComplete="off"
+                    className="input description-short-input is-size-4"
+                    type="text"
+                    placeholder="Describe your post.."
+                    value={descriptionShort}
+                    onChange={e =>
+                      dispatch({
+                        type: "descriptionShort",
+                        descriptionShort: e.target.value
+                      })
+                    }
+                  />
                 </div>
               </div>
-            </section>
-            <section className="section">
-              <div className="columns is-multiline is-centered">
-                {chapters.map(chapter => {
-                  return (
-                    <div key={chapter.id} className="column is-three-fifths">
-                      <PostCreateChapter
-                        chapterID={chapter.id}
-                        updateChapter={(chapter: IChapter) =>
-                          dispatch({ type: "update_chapter", chapter })
-                        }
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
-            <section className="section">
-              <div className="columns is-centered">
-                <div className="column is-three-fifths">
-                  <button
-                    type="button"
-                    onClick={() => dispatch({ type: "add_chapter" })}
-                    className="button"
-                  >
-                    ADD CHAPTER
-                  </button>
+            </div>
+          </div>
+        </Section>
+        <Section>
+          <div className="columns is-centered">
+            <div className="column is-three-quarter">
+              <p className="subtitle is-5">CATEGORY</p>
+              <div className="field">
+                <div className="control">
+                  <Dropdown
+                    dispatchSelected={handleSelectedCategory}
+                    dropdownItems={POST_CATEGORIES.map(category => {
+                      return { id: category.id, text: category.name };
+                    })}
+                  />
                 </div>
               </div>
-            </section>
-          </form>
-          <br />
-          <br />
-          <br />
-          {submitted && (
-            <h1 className="title has-text-primary has-text-centered">
-              Submitted!
-            </h1>
-          )}
-        </div>
-      </section>
-    </div>
+            </div>
+          </div>
+        </Section>
+        <Section>
+          <div className="columns is-multiline is-centered">
+            {chapters.map(chapter => {
+              return (
+                <div key={chapter.id} className="column is-three-fifths">
+                  <PostCreateChapter
+                    chapterID={chapter.id}
+                    updateChapter={(chapter: IChapter) =>
+                      dispatch({ type: "update_chapter", chapter })
+                    }
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </Section>
+        <Section>
+          <div className="columns is-centered">
+            <div className="column is-three-fifths">
+              <button
+                type="button"
+                onClick={() => dispatch({ type: "add_chapter" })}
+                className="button"
+              >
+                ADD CHAPTER
+              </button>
+            </div>
+          </div>
+        </Section>
+        <Section>
+          <div className="columns is-centered">
+            <div className="column is-one-quarter">
+              <button type="submit" className="button is-primary">
+                Create Post
+              </button>
+            </div>
+            <div className="column is-one-quarter">
+              <button type="button" className="button is-link">
+                Save for later
+              </button>
+            </div>
+          </div>
+        </Section>
+      </form>
+      <br />
+      <br />
+      <br />
+      {submitted && (
+        <h1 className="title has-text-primary has-text-centered">Submitted!</h1>
+      )}
+    </Page>
   );
 };
 

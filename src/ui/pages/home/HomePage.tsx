@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { firestore } from "../../../services/firebase/firebase-service";
+import Page from "../../components/layout/Page";
+import Section from "../../components/layout/Section";
 
 const HomePage: React.FC = () => {
   const [amountPosts, setAmountPosts] = useState<number>(0);
@@ -16,8 +18,8 @@ const HomePage: React.FC = () => {
       });
   }, []);
   return (
-    <div className="home-page container fade-in">
-      <section className="section">
+    <Page name="home-page">
+      <Section>
         <div className="hero-body">
           <h1 className="title is-size-1 has-text-primary has-text-centered is-family-secondary">
             CONCISO
@@ -26,9 +28,8 @@ const HomePage: React.FC = () => {
             INFORMATION THAT HONORS YOUR TIME.
           </h2>
         </div>
-      </section>
-
-      <section className="section">
+      </Section>
+      <Section>
         <div className="level">
           <div className="level-item has-text-centered">
             <div>
@@ -55,8 +56,8 @@ const HomePage: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </Section>
+    </Page>
   );
 };
 

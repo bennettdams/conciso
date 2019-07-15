@@ -1,27 +1,26 @@
 import React, { useState } from "react";
-import PageHeader from "../../components/page-header/PageHeader";
 import ProfileUserInformation from "./ProfileUserInformation";
 import "./ProfilePage.scss";
 import ProfilePosts from "./ProfilePosts";
 import Button from "../../components/button/Button";
+import Page from "../../components/layout/Page";
+import Section from "../../components/layout/Section";
 
 const ProfilePage: React.FC = () => {
   const [edit, setEdit] = useState<boolean>(false);
 
   return (
-    <div className="profile-page container fade-in">
-      <PageHeader title="PROFILE" />
-      <section className="section">
+    <Page name="profile-page" title="PROFILE">
+      <Section>
         <Button callback={() => setEdit(!edit)}>Edit</Button>
-      </section>
-      <section className="section user-information">
+      </Section>
+      <Section>
         <ProfileUserInformation edit={edit} />
-      </section>
-
-      <section className="section posts">
+      </Section>
+      <Section>
         <ProfilePosts />
-      </section>
-    </div>
+      </Section>
+    </Page>
   );
 };
 

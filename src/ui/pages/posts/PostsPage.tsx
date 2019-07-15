@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import PageHeader from "../../components/page-header/PageHeader";
 import { timestampToDateString } from "../../../util/timestampToDateString";
 import { Link } from "react-router-dom";
 import "./PostsPage.scss";
 import IPost from "../../../types/IPost";
 import { firestore } from "../../../services/firebase/firebase-service";
+import Page from "../../components/layout/Page";
+import Section from "../../components/layout/Section";
 
 const PostsPage: React.FC = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -32,9 +33,8 @@ const PostsPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="posts-page container fade-in">
-      <PageHeader title="POSTS" />
-      <section className="posts">
+    <Page name="posts-page" title="POSTS">
+      <Section>
         <div className="columns is-multiline is-centered">
           {posts.map((post: IPost) => {
             return (
@@ -65,8 +65,8 @@ const PostsPage: React.FC = () => {
             );
           })}
         </div>
-      </section>
-    </div>
+      </Section>
+    </Page>
   );
 };
 

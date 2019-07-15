@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./Modal.scss";
+import Section from "../layout/Section";
 
 interface ModalProps {
   hide: () => void;
@@ -23,7 +24,7 @@ const Modal: React.FC<ModalProps> = props => {
           <header className="modal-card-head">
             <p className="modal-card-title">{props.title}</p>
           </header>
-          <section className="modal-card-body">{props.children}</section>
+          <Section cssName="modal-card-body">{props.children}</Section>
           <footer className="modal-card-foot">
             <button onClick={mainButtonClick} className="button is-primary">
               {props.buttonText}

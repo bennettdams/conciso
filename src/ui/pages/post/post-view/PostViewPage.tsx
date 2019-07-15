@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import PageHeader from "../../../components/page-header/PageHeader";
 import { RouteComponentProps } from "react-router-dom";
 import { timestampToDateString } from "../../../../util/timestampToDateString";
 import Chapter from "../../../components/chapter/Chapter";
 import { IChapter } from "../../../../types/IChapter";
 import IPost from "../../../../types/IPost";
 import { firestore } from "../../../../services/firebase/firebase-service";
+import Page from "../../../components/layout/Page";
+import Section from "../../../components/layout/Section";
 
 type TParams = { id: string };
 
@@ -47,11 +48,10 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
   }, [postId]);
 
   return (
-    <div className="post-view-page fade-in">
-      <PageHeader title="" />
+    <Page name="post-view-page">
       {post && (
-        <div className="post hoverable">
-          <section className="section hero is-primary">
+        <div className="post">
+          <Section cssName="hero is-primary">
             <div className="hero-body">
               <div className="level">
                 <div className="level-left">
@@ -89,22 +89,26 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
                 </div>
               </div>
             </div>
-          </section>
-          <section className="section chapters">
+          </Section>
+          <Section cssName="chapters">
             <div className="columns is-multiline is-centered">
-              {post.chapters &&
+              {post.chapters.length > 0 &&
                 post.chapters.map((chapter: IChapter) => {
                   return (
-                    <div key={chapter.id} className="chapter column is-half">
-                      <Chapter chapter={chapter} />
+                    <div key={chapter.id} className="column is-full">
+                      <div className="columns is-centered is-multiline">
+                        <div className="column is-four-fifths">
+                          <Chapter chapter={chapter} />
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
             </div>
-          </section>
+          </Section>
         </div>
       )}
-    </div>
+    </Page>
   );
 };
 
