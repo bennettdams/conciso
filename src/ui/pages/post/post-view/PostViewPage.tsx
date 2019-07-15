@@ -91,14 +91,11 @@ const PostViewPage = ({ match }: RouteComponentProps<TParams>) => {
             </div>
           </section>
           <section className="section chapters">
-            <div className="columns is-multiline">
+            <div className="columns is-multiline is-centered">
               {post.chapters &&
                 post.chapters.map((chapter: IChapter) => {
                   return (
-                    <div
-                      key={chapter.id}
-                      className="chapter column is-half is-offset-one-quarter margin"
-                    >
+                    <div key={chapter.id} className="chapter column is-half">
                       <Chapter chapter={chapter} />
                     </div>
                   );

@@ -3,6 +3,7 @@ import PageHeader from "../../components/page-header/PageHeader";
 import ProfileUserInformation from "./ProfileUserInformation";
 import "./ProfilePage.scss";
 import ProfilePosts from "./ProfilePosts";
+import Button from "../../components/button/Button";
 
 const ProfilePage: React.FC = () => {
   const [edit, setEdit] = useState<boolean>(false);
@@ -10,14 +11,14 @@ const ProfilePage: React.FC = () => {
   return (
     <div className="profile-page container fade-in">
       <PageHeader title="PROFILE" />
-      <button className="btn-edit" onClick={() => setEdit(!edit)}>
-        Edit
-      </button>
-      <section className="user-information">
+      <section className="section">
+        <Button callback={() => setEdit(!edit)}>Edit</Button>
+      </section>
+      <section className="section user-information">
         <ProfileUserInformation edit={edit} />
       </section>
 
-      <section className="posts">
+      <section className="section posts">
         <ProfilePosts />
       </section>
     </div>

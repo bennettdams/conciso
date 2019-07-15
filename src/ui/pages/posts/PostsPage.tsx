@@ -35,13 +35,10 @@ const PostsPage: React.FC = () => {
     <div className="posts-page container fade-in">
       <PageHeader title="POSTS" />
       <section className="posts">
-        <div className="columns is-multiline">
+        <div className="columns is-multiline is-centered">
           {posts.map((post: IPost) => {
             return (
-              <div
-                key={post.id}
-                className="column is-three-fifths is-offset-one-fifth margin-big"
-              >
+              <div key={post.id} className="column is-three-fifths">
                 <Link to={"post/" + post.id}>
                   <article className="message is-primary fade-in-slow">
                     <div className="message-header post-header">

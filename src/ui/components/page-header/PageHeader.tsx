@@ -16,15 +16,14 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
   };
 
   return (
-    <div className="page-header container">
+    <div className="page-header">
       <section className="section">
         <div
           onMouseEnter={onMouseEnterHandler}
           onMouseLeave={onMouseLeaveHandler}
-          className={[
-            "hero-body",
-            isHovered ? "flow-to-right" : "flow-to-right-reset"
-          ].join(" ")}
+          className={[isHovered ? "flow-to-right" : "flow-to-right-reset"].join(
+            " "
+          )}
         >
           <h1 className="title page-header-title is-size-1 has-text-primary">
             {props.title}

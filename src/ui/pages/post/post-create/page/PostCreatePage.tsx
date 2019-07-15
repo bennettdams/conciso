@@ -140,123 +140,113 @@ const PostCreatePage: React.FC = () => {
       <section className="section">
         <div className="container">
           <form onSubmit={handleSubmit}>
-            <div className="columns is-multiline">
-              {/*  */}
-              {!isSignedIn && (
+            <section className="section">
+              <div className="columns is-multiline is-centered">
+                {/*  */}
+                {!isSignedIn && (
+                  <div className="column is-full">
+                    Please sign in to create a post!
+                  </div>
+                )}
                 <div className="column is-full">
-                  Please sign in to create a post!
-                </div>
-              )}
-              <div className="column is-full">
-                <div className="field">
-                  {/* <label className="label">Title</label> */}
-                  <div className="control">
-                    <input
-                      name="inputTitle"
-                      autoComplete="off"
-                      className="input title-input is-size-2"
-                      type="text"
-                      placeholder="Enter a title.."
-                      value={title}
-                      onChange={e =>
-                        dispatch({ type: "title", title: e.target.value })
-                      }
-                      onKeyDown={handleKeyPress}
-                    />
-                  </div>
-                </div>
-              </div>
-              {/*  */}
-              <div className="column is-three-fifths is-offset-one-fifth">
-                <div className="field">
-                  {/* <label className="label">Short description</label> */}
-                  <div className="control">
-                    <input
-                      name="inputDescriptionShort"
-                      autoComplete="off"
-                      className="input description-short-input is-size-4"
-                      type="text"
-                      placeholder="Describe your post.."
-                      value={descriptionShort}
-                      onChange={e =>
-                        dispatch({
-                          type: "descriptionShort",
-                          descriptionShort: e.target.value
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
-              {/*  */}
-            </div>
-            {/*  */}
-            <div className="columns is-multiline margin-big">
-              {/*  */}
-              <div className="column is-full">
-                <div className="level">
-                  <div className="level-left">
-                    <div className="level-item">
-                      <p className="subtitle is-5">CATEGORY</p>
-                      <div className="field">
-                        <div className="control">
-                          <Dropdown
-                            dispatchSelected={handleSelectedCategory}
-                            dropdownItems={POST_CATEGORIES.map(category => {
-                              return { id: category.id, text: category.name };
-                            })}
-                          />
-                        </div>
-                      </div>
+                  <div className="field">
+                    {/* <label className="label">Title</label> */}
+                    <div className="control">
+                      <input
+                        name="inputTitle"
+                        autoComplete="off"
+                        className="input title-input is-size-2"
+                        type="text"
+                        placeholder="Enter a title.."
+                        value={title}
+                        onChange={e =>
+                          dispatch({ type: "title", title: e.target.value })
+                        }
+                        onKeyDown={handleKeyPress}
+                      />
                     </div>
                   </div>
-
-                  <div className="level-right">
-                    <div className="level-item">
-                      <div className="buttons">
-                        <button type="submit" className="button is-primary">
-                          Create Post
-                        </button>
-                        <button type="button" className="button is-link">
-                          Save for later
-                        </button>
-                      </div>
+                </div>
+                {/*  */}
+                <div className="column is-three-fifths">
+                  <div className="field">
+                    {/* <label className="label">Short description</label> */}
+                    <div className="control">
+                      <input
+                        name="inputDescriptionShort"
+                        autoComplete="off"
+                        className="input description-short-input is-size-4"
+                        type="text"
+                        placeholder="Describe your post.."
+                        value={descriptionShort}
+                        onChange={e =>
+                          dispatch({
+                            type: "descriptionShort",
+                            descriptionShort: e.target.value
+                          })
+                        }
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-              {/*  */}
-            </div>
-            {/*  */}
-            <div className="columns is-multiline">
-              {chapters.map(chapter => {
-                return (
-                  <div
-                    key={chapter.id}
-                    className="column is-three-fifths is-offset-one-fifth"
+            </section>
+            <section className="section">
+              <div className="columns is-centered">
+                <div className="column is-three-quarter">
+                  <p className="subtitle is-5">CATEGORY</p>
+                  <div className="field">
+                    <div className="control">
+                      <Dropdown
+                        dispatchSelected={handleSelectedCategory}
+                        dropdownItems={POST_CATEGORIES.map(category => {
+                          return { id: category.id, text: category.name };
+                        })}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="column is-one-quarter">
+                  <div className="buttons">
+                    <button type="submit" className="button is-primary">
+                      Create Post
+                    </button>
+                    <button type="button" className="button is-link">
+                      Save for later
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section className="section">
+              <div className="columns is-multiline is-centered">
+                {chapters.map(chapter => {
+                  return (
+                    <div key={chapter.id} className="column is-three-fifths">
+                      <PostCreateChapter
+                        chapterID={chapter.id}
+                        updateChapter={(chapter: IChapter) =>
+                          dispatch({ type: "update_chapter", chapter })
+                        }
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+            <section className="section">
+              <div className="columns is-centered">
+                <div className="column is-three-fifths">
+                  <button
+                    type="button"
+                    onClick={() => dispatch({ type: "add_chapter" })}
+                    className="button"
                   >
-                    <PostCreateChapter
-                      chapterID={chapter.id}
-                      updateChapter={(chapter: IChapter) =>
-                        dispatch({ type: "update_chapter", chapter })
-                      }
-                    />
-                  </div>
-                );
-              })}
-            </div>
-            {/*  */}
-            <div className="columns">
-              <div className="column is-three-fifths is-offset-one-fifth">
-                <button
-                  type="button"
-                  onClick={() => dispatch({ type: "add_chapter" })}
-                  className="button"
-                >
-                  ADD CHAPTER
-                </button>
+                    ADD CHAPTER
+                  </button>
+                </div>
               </div>
-            </div>
+            </section>
           </form>
           <br />
           <br />

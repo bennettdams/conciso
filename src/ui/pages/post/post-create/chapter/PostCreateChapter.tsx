@@ -32,8 +32,8 @@ const PostCreateChapter: React.FC<PostCreateChapterProps> = props => {
   };
 
   return (
-    <div className="columns is-multiline">
-      <div className="column is-three-fifths">
+    <div className="columns is-multiline is-centered">
+      <div className="column is-full">
         <div className="field">
           <div className="control">
             <input
