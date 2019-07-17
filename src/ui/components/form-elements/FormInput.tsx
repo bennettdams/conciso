@@ -2,6 +2,7 @@ import React from "react";
 
 interface FormInputProps {
   label?: string;
+  placeholder?: string;
   input: any;
   callback: (inputValue: string) => void;
 }
@@ -11,6 +12,8 @@ const FormInput: React.FC<FormInputProps> = props => {
     <label>
       {props.label}
       <input
+        className="input"
+        placeholder={props.placeholder || ""}
         type="text"
         required
         value={props.input}
@@ -21,6 +24,8 @@ const FormInput: React.FC<FormInputProps> = props => {
     </label>
   ) : (
     <input
+      className="input"
+      placeholder={props.placeholder || ""}
       type="text"
       required
       value={props.input}
