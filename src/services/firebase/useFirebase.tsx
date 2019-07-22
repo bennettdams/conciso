@@ -4,17 +4,17 @@ import { useState, useEffect } from "react";
 
 const useFirebase = () => {
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const [userFirebase, setUserFirebase] = useState<firebase.User | null>(null);
 
   // SIGNED IN
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(userFirebase => {
       if (userFirebase) {
-        setUser(userFirebase);
+        setUserFirebase(userFirebase);
         setIsSignedIn(true);
         console.log(userFirebase);
       } else {
-        setUser(null);
+        setUserFirebase(null);
         setIsSignedIn(false);
       }
     });
@@ -61,7 +61,7 @@ const useFirebase = () => {
     isSignedIn,
     signOut,
     createUser,
-    user
+    userFirebase
   };
 };
 
